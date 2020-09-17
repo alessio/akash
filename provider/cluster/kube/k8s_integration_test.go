@@ -5,14 +5,13 @@ package kube
 import (
 	"bufio"
 	"context"
-	"fmt"
-	"math/rand"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/ovrclk/akash/testutil"
 )
@@ -20,7 +19,7 @@ import (
 func TestNewClient(t *testing.T) {
 	ctx := context.Background()
 
-	ns := fmt.Sprintf("test-provider-cluster-kube-client-%v", rand.Uint32())
+	ns := "effectively unused NS variable"
 
 	settings := settings{
 		DeploymentServiceType:          corev1.ServiceTypeClusterIP,
@@ -29,11 +28,16 @@ func TestNewClient(t *testing.T) {
 		DeploymentIngressExposeLBHosts: false,
 	}
 
-	client, err := newClientWithSettings(testutil.Logger(t), "localhost", ns, settings)
+	kubeClient, err := newClientWithSettings(testutil.Logger(t), "localhost", ns, settings)
 	require.NoError(t, err)
+	oc, ok := kubeClient.(*client)
+	if !ok {
+		require.True(t, ok, "failed interface type conversion")
+	}
+	kc := oc.kc
 
 	// check inventory
-	nodes, err := client.Inventory(ctx)
+	nodes, err := kubeClient.Inventory(ctx)
 	require.NoError(t, err)
 	require.Len(t, nodes, 1)
 
@@ -43,34 +47,40 @@ func TestNewClient(t *testing.T) {
 	require.NotZero(t, node.Available().Memory)
 
 	// ensure no deployments
-	deployments, err := client.Deployments(ctx)
+	deployments, err := kubeClient.Deployments(ctx)
 	assert.NoError(t, err)
 	require.Empty(t, deployments)
 
 	// create lease
 	lid := testutil.LeaseID(t)
 	group := testutil.AppManifestGenerator.Group(t)
+	b := newNSBuilder(settings, lid, &group)
 
 	// deploy lease
-	err = client.Deploy(ctx, lid, &group)
+	err = kubeClient.Deploy(ctx, lid, &group)
 	assert.NoError(t, err)
 
 	// query deployments, ensure lease present
-	deployments, err = client.Deployments(ctx)
+	deployments, err = kubeClient.Deployments(ctx)
 	require.NoError(t, err)
 	require.Len(t, deployments, 1)
 	deployment := deployments[0]
 
 	assert.Equal(t, lid, deployment.LeaseID())
 
+	// query namespace and pod security policies
+	psp, err := kc.PolicyV1beta1().PodSecurityPolicies().Get(ctx, b.ns(), metav1.GetOptions{})
+	require.NoError(t, err)
+	require.NotNil(t, psp)
+
 	svcname := group.Services[0].Name
 
-	lstat, err := client.LeaseStatus(ctx, lid)
+	lstat, err := kubeClient.LeaseStatus(ctx, lid)
 	assert.NoError(t, err)
 	assert.Len(t, lstat.Services, 1)
 	assert.Equal(t, svcname, lstat.Services[0].Name)
 
-	sstat, err := client.ServiceStatus(ctx, lid, svcname)
+	sstat, err := kubeClient.ServiceStatus(ctx, lid, svcname)
 	require.NoError(t, err)
 
 	const (
@@ -85,13 +95,13 @@ func TestNewClient(t *testing.T) {
 			break
 		}
 		time.Sleep(delay)
-		sstat, err = client.ServiceStatus(ctx, lid, svcname)
+		sstat, err = kubeClient.ServiceStatus(ctx, lid, svcname)
 	}
 
 	assert.NoError(t, err)
 	assert.NotEqual(t, maxtries, tries)
 
-	logs, err := client.ServiceLogs(ctx, lid, svcname, true, nil)
+	logs, err := kubeClient.ServiceLogs(ctx, lid, svcname, true, nil)
 	require.NoError(t, err)
 	require.Equal(t, int(sstat.AvailableReplicas), len(logs))
 
@@ -117,7 +127,7 @@ func TestNewClient(t *testing.T) {
 
 	// ensure inventory used
 	// XXX: not working with kind. might be a delay issue?
-	// curnodes, err := client.Inventory(ctx)
+	// curnodes, err := kubeClient.Inventory(ctx)
 	// require.NoError(t, err)
 	// require.Len(t, curnodes, 1)
 	// curnode := curnodes[0]
@@ -125,6 +135,6 @@ func TestNewClient(t *testing.T) {
 	// assert.Less(t, node.Available().Memory, curnode.Available().Memory)
 
 	// teardown lease
-	err = client.TeardownLease(ctx, lid)
+	err = kubeClient.TeardownLease(ctx, lid)
 	assert.NoError(t, err)
 }
