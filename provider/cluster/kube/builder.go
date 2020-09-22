@@ -12,6 +12,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	extv1 "k8s.io/api/extensions/v1beta1"
+	netv1 "k8s.io/api/networking/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
@@ -23,6 +24,7 @@ import (
 
 const (
 	akashManagedLabelName         = "akash.network"
+	akashNetworkNamespace         = "akash.network/namespace"
 	akashManifestServiceLabelName = "akash.network/manifest-service"
 )
 
@@ -40,6 +42,7 @@ func (b *builder) ns() string {
 func (b *builder) labels() map[string]string {
 	return map[string]string{
 		akashManagedLabelName: "true",
+		akashNetworkNamespace: lidNS(b.lid),
 	}
 }
 
@@ -241,6 +244,95 @@ func (b *serviceBuilder) ports() []corev1.ServicePort {
 		})
 	}
 	return ports
+}
+
+type netPolBuilder struct {
+	builder
+}
+
+func newNetPolBuilder(settings settings, lid mtypes.LeaseID, group *manifest.Group) *netPolBuilder {
+	return &netPolBuilder{builder: builder{settings: settings, lid: lid, group: group}}
+}
+
+func (b *netPolBuilder) create() ([]*netv1.NetworkPolicy, error) { // nolint:golint,unparam
+	return []*netv1.NetworkPolicy{
+		{ // Deny all ingress to the tenant namespace
+			ObjectMeta: metav1.ObjectMeta{
+				Name:   fmt.Sprintf("%s-deny-all-ingress", b.ns()),
+				Labels: b.labels(),
+			},
+			Spec: netv1.NetworkPolicySpec{
+				PodSelector: metav1.LabelSelector{
+					MatchLabels: map[string]string{
+						akashNetworkNamespace: lidNS(b.lid),
+					},
+				},
+				PolicyTypes: []netv1.PolicyType{
+					netv1.PolicyTypeIngress,
+				},
+			},
+		},
+		{ // Allow valid ingress to the tentant namespace from itself, ingress-nginx, and the metrics-server.
+			ObjectMeta: metav1.ObjectMeta{
+				Name:   fmt.Sprintf("%s-allow-selected-ingress", b.ns()),
+				Labels: b.labels(),
+			},
+			Spec: netv1.NetworkPolicySpec{
+				PodSelector: metav1.LabelSelector{
+					MatchLabels: map[string]string{
+						akashNetworkNamespace: lidNS(b.lid),
+					},
+				},
+				Ingress: []netv1.NetworkPolicyIngressRule{
+					{ // Allow Network Connections from same Namespace
+						From: []netv1.NetworkPolicyPeer{
+							{
+								NamespaceSelector: &metav1.LabelSelector{
+									MatchLabels: map[string]string{
+										akashNetworkNamespace: lidNS(b.lid),
+									},
+								},
+							},
+						},
+					},
+
+					{ // Allow network traffic from ingress-nginx
+						From: []netv1.NetworkPolicyPeer{
+							{
+								PodSelector: &metav1.LabelSelector{
+									MatchLabels: map[string]string{
+										"app.kubernetes.io/name": "ingress-nginx",
+									},
+								},
+							},
+						},
+					},
+
+					{ // Allow network traffic from metrics-server
+						From: []netv1.NetworkPolicyPeer{
+							{
+								PodSelector: &metav1.LabelSelector{
+									MatchLabels: map[string]string{
+										"k8s-app": "metrics-server",
+									},
+								},
+							},
+						},
+					},
+					// TODO: Allow Provider service?
+				},
+				PolicyTypes: []netv1.PolicyType{
+					netv1.PolicyTypeIngress,
+				},
+			},
+		},
+	}, nil
+}
+
+func (b *netPolBuilder) update(obj *netv1.NetworkPolicy) (*netv1.NetworkPolicy, error) { // nolint:golint,unparam
+	obj.Name = b.ns()
+	obj.Labels = b.labels()
+	return obj, nil
 }
 
 // ingress
