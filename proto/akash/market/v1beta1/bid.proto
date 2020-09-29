@@ -17,8 +17,7 @@ message MsgCreateBid {
         (gogoproto.jsontag)    = "order",
         (gogoproto.moretags)   = "yaml:\"order\""
     ];
-    bytes provider = 2 [
-        (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string provider = 2 [
         (gogoproto.jsontag)  = "provider",
         (gogoproto.moretags) = "yaml:\"provider\""
     ];
@@ -44,11 +43,10 @@ message MsgCloseBid {
 // BidID stores owner and all other seq numbers
 // A successful bid becomes a Lease(ID).
 message BidID {
-    option (gogoproto.equal) = true;
+    option (gogoproto.equal) = false;
     option (gogoproto.goproto_stringer) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)  = "owner",
         (gogoproto.moretags) = "yaml:\"owner\""
     ];
@@ -67,8 +65,7 @@ message BidID {
         (gogoproto.jsontag)    = "oseq",
         (gogoproto.moretags)   = "yaml:\"oseq\""
     ];
-    bytes provider = 5 [
-        (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string provider = 5 [
         (gogoproto.jsontag)  = "provider",
         (gogoproto.moretags) = "yaml:\"provider\""
     ];
@@ -127,8 +124,7 @@ message Bid {
 message BidFilters {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -147,8 +143,7 @@ message BidFilters {
         (gogoproto.jsontag)    = "oseq",
         (gogoproto.moretags)   = "yaml:\"oseq\""
     ];
-    bytes provider = 5 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string provider = 5 [
         (gogoproto.jsontag)    = "provider",
         (gogoproto.moretags)   = "yaml:\"provider\""
     ];

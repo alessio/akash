@@ -8,11 +8,10 @@ option go_package = "github.com/ovrclk/akash/x/market/types";
 
 // LeaseID stores bid details of lease
 message LeaseID {
-    option (gogoproto.equal) = true;
+    option (gogoproto.equal) = false;
     option (gogoproto.goproto_stringer) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)  = "owner",
         (gogoproto.moretags) = "yaml:\"owner\""
     ];
@@ -31,8 +30,7 @@ message LeaseID {
         (gogoproto.jsontag)    = "oseq",
         (gogoproto.moretags)   = "yaml:\"oseq\""
     ];
-    bytes provider = 5 [
-        (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string provider = 5 [
         (gogoproto.jsontag)  = "provider",
         (gogoproto.moretags) = "yaml:\"provider\""
     ];
@@ -87,8 +85,7 @@ message Lease {
 message LeaseFilters {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -107,8 +104,7 @@ message LeaseFilters {
         (gogoproto.jsontag)    = "oseq",
         (gogoproto.moretags)   = "yaml:\"oseq\""
     ];
-    bytes provider = 5 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string provider = 5 [
         (gogoproto.jsontag)    = "provider",
         (gogoproto.moretags)   = "yaml:\"provider\""
     ];

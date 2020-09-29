@@ -10,8 +10,7 @@ option go_package = "github.com/ovrclk/akash/x/provider/types";
 message MsgCreateProvider {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -32,8 +31,7 @@ message MsgCreateProvider {
 message MsgUpdateProvider {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -54,8 +52,7 @@ message MsgUpdateProvider {
 message MsgDeleteProvider {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -66,8 +63,7 @@ message Provider {
     option (gogoproto.equal) = false;
     option (gogoproto.goproto_stringer) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];

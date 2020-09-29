@@ -50,7 +50,7 @@ message MsgUpdateDeployment {
 
 // MsgCloseDeployment defines an SDK message for closing deployment
 message MsgCloseDeployment {
-    option (gogoproto.equal) = true;
+    option (gogoproto.equal) = false;
 
     DeploymentID id = 1 [
         (gogoproto.nullable)   = false,
@@ -62,11 +62,10 @@ message MsgCloseDeployment {
 
 // DeploymentID stores owner and sequence number
 message DeploymentID {
-    option (gogoproto.equal) = true;
+    option (gogoproto.equal) = false;
     option (gogoproto.goproto_stringer) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
@@ -141,8 +140,7 @@ message DeploymentResponse {
 message DeploymentFilters {
     option (gogoproto.equal) = false;
 
-    bytes owner = 1 [
-        (gogoproto.casttype)   = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    string owner = 1 [
         (gogoproto.jsontag)    = "owner",
         (gogoproto.moretags)   = "yaml:\"owner\""
     ];
