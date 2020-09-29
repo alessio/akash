@@ -46,7 +46,11 @@ func (id OrderID) Validate() error {
 
 // String provides stringer interface to save reflected formatting.
 func (id OrderID) String() string {
-	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, nil)
+	owner, err := sdk.AccAddressFromBech32(id.Owner)
+	if err != nil {
+		panic(err)
+	}
+	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, nil)
 }
 
 // MakeBidID returns BidID instance with provided order details and provider
@@ -56,14 +60,14 @@ func MakeBidID(id OrderID, provider sdk.AccAddress) BidID {
 		DSeq:     id.DSeq,
 		GSeq:     id.GSeq,
 		OSeq:     id.OSeq,
-		Provider: provider,
+		Provider: provider.String(),
 	}
 }
 
 // Equals method compares specific bid with provided bid
 func (id BidID) Equals(other BidID) bool {
 	return id.OrderID().Equals(other.OrderID()) &&
-		id.Provider.Equals(other.Provider)
+		id.Provider == other.Provider
 }
 
 // LeaseID method returns lease details of bid
@@ -83,12 +87,22 @@ func (id BidID) OrderID() OrderID {
 
 // String method for consistent output.
 func (id BidID) String() string {
-	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, &id.Provider)
+	owner, err := sdk.AccAddressFromBech32(id.Owner)
+	if err != nil {
+		panic(err)
+	}
+
+	provider, err := sdk.AccAddressFromBech32(id.Provider)
+	if err != nil {
+		panic(err)
+	}
+
+	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, &provider)
 }
 
 // OrderIDString provides consistent conversion to string values for OrderID.
 func OrderIDString(id OrderID) string {
-	return fmt.Sprintf("%s-%d-%d-%d", id.Owner.String(), id.DSeq, id.GSeq, id.OSeq)
+	return fmt.Sprintf("%s-%d-%d-%d", id.Owner, id.DSeq, id.GSeq, id.OSeq)
 }
 
 // GroupID method returns GroupID details with specific bid details
@@ -106,7 +120,7 @@ func (id BidID) Validate() error {
 	if err := id.OrderID().Validate(); err != nil {
 		return sdkerrors.Wrap(err, "BidID: Invalid OrderID")
 	}
-	if err := sdk.VerifyAddressFormat(id.Provider); err != nil {
+	if _, err := sdk.AccAddressFromBech32(id.Provider); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "BidID: Invalid Provider Address")
 	}
 	return nil
@@ -114,7 +128,7 @@ func (id BidID) Validate() error {
 
 // BidIDString provides consistent conversion to string values for BidID/LeaseIDs.
 func BidIDString(id BidID) string {
-	return fmt.Sprintf("%s-%d-%d-%d-%s", id.Owner.String(), id.DSeq, id.GSeq, id.OSeq, id.Provider.String())
+	return fmt.Sprintf("%s-%d-%d-%d-%s", id.Owner, id.DSeq, id.GSeq, id.OSeq, id.Provider)
 }
 
 // MakeLeaseID returns LeaseID instance with provided bid details
@@ -157,5 +171,15 @@ func (id LeaseID) DeploymentID() dtypes.DeploymentID {
 
 // String method provides human readable representation of LeaseID.
 func (id LeaseID) String() string {
-	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, &id.Provider)
+	owner, err := sdk.AccAddressFromBech32(id.Owner)
+	if err != nil {
+		panic(err)
+	}
+
+	provider, err := sdk.AccAddressFromBech32(id.Provider)
+	if err != nil {
+		panic(err)
+	}
+
+	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, &provider)
 }

@@ -1,7 +1,6 @@
 package client_test
 
 import (
-	"encoding/base64"
 	"fmt"
 	"path/filepath"
 	"testing"
@@ -163,9 +162,6 @@ func (s *IntegrationTestSuite) TestGetOrders() {
 	val := s.network.Validators[0]
 	order := s.order
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(order.OrderID.Owner)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -183,7 +179,7 @@ func (s *IntegrationTestSuite) TestGetOrders() {
 		{
 			"get orders with filters",
 			fmt.Sprintf("%s/akash/market/v1beta1/orders/list?filters.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				order.OrderID.Owner),
 			false,
 			order,
 			1,
@@ -230,9 +226,6 @@ func (s *IntegrationTestSuite) TestGetOrder() {
 	val := s.network.Validators[0]
 	order := s.order
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(order.OrderID.Owner)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -248,21 +241,21 @@ func (s *IntegrationTestSuite) TestGetOrder() {
 		{
 			"get order with invalid input",
 			fmt.Sprintf("%s/akash/market/v1beta1/orders/info?id.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				order.OrderID.Owner),
 			true,
 			types.Order{},
 		},
 		{
 			"order not found",
 			fmt.Sprintf("%s/akash/market/v1beta1/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d", val.APIAddress,
-				ownerAddrBase64, 249, 32, 235),
+				order.OrderID.Owner, 249, 32, 235),
 			true,
 			types.Order{},
 		},
 		{
 			"valid get order request",
 			fmt.Sprintf("%s/akash/market/v1beta1/orders/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d",
-				val.APIAddress, ownerAddrBase64, order.OrderID.DSeq, order.OrderID.GSeq, order.OrderID.OSeq),
+				val.APIAddress, order.OrderID.Owner, order.OrderID.DSeq, order.OrderID.GSeq, order.OrderID.OSeq),
 			false,
 			order,
 		},
@@ -291,10 +284,6 @@ func (s *IntegrationTestSuite) TestGetBids() {
 	val := s.network.Validators[0]
 	bid := s.bid
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(bid.BidID.Owner)
-	providerAddrBase64 := base64.URLEncoding.EncodeToString(bid.BidID.Provider)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -312,7 +301,7 @@ func (s *IntegrationTestSuite) TestGetBids() {
 		{
 			"get bids with filters",
 			fmt.Sprintf("%s/akash/market/v1beta1/bids/list?filters.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				bid.BidID.Owner),
 			false,
 			bid,
 			1,
@@ -328,7 +317,7 @@ func (s *IntegrationTestSuite) TestGetBids() {
 		{
 			"get bids with more filters",
 			fmt.Sprintf("%s/akash/market/v1beta1/bids/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
-				val.APIAddress, bid.State.String(), bid.BidID.OSeq, providerAddrBase64),
+				val.APIAddress, bid.State.String(), bid.BidID.OSeq, bid.BidID.Provider),
 			false,
 			bid,
 			1,
@@ -359,10 +348,6 @@ func (s *IntegrationTestSuite) TestGetBid() {
 	val := s.network.Validators[0]
 	bid := s.bid
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(bid.BidID.Owner)
-	providerAddrBase64 := base64.URLEncoding.EncodeToString(bid.BidID.Provider)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -378,21 +363,21 @@ func (s *IntegrationTestSuite) TestGetBid() {
 		{
 			"get bid with invalid input",
 			fmt.Sprintf("%s/akash/market/v1beta1/bids/info?id.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				bid.BidID.Owner),
 			true,
 			types.Bid{},
 		},
 		{
 			"bid not found",
 			fmt.Sprintf("%s/akash/market/v1beta1/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
-				val.APIAddress, providerAddrBase64, 249, 32, 235, ownerAddrBase64),
+				val.APIAddress, bid.BidID.Provider, 249, 32, 235, bid.BidID.Owner),
 			true,
 			types.Bid{},
 		},
 		{
 			"valid get bid request",
 			fmt.Sprintf("%s/akash/market/v1beta1/bids/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
-				val.APIAddress, ownerAddrBase64, bid.BidID.DSeq, bid.BidID.GSeq, bid.BidID.OSeq, providerAddrBase64),
+				val.APIAddress, bid.BidID.Owner, bid.BidID.DSeq, bid.BidID.GSeq, bid.BidID.OSeq, bid.BidID.Provider),
 			false,
 			bid,
 		},
@@ -421,10 +406,6 @@ func (s *IntegrationTestSuite) TestGetLeases() {
 	val := s.network.Validators[0]
 	lease := s.lease
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(lease.LeaseID.Owner)
-	providerAddrBase64 := base64.URLEncoding.EncodeToString(lease.LeaseID.Provider)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -442,7 +423,7 @@ func (s *IntegrationTestSuite) TestGetLeases() {
 		{
 			"get leases with filters",
 			fmt.Sprintf("%s/akash/market/v1beta1/leases/list?filters.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				lease.LeaseID.Owner),
 			false,
 			lease,
 			1,
@@ -458,7 +439,7 @@ func (s *IntegrationTestSuite) TestGetLeases() {
 		{
 			"get leases with more filters",
 			fmt.Sprintf("%s/akash/market/v1beta1/leases/list?filters.state=%s&filters.oseq=%d&filters.provider=%s",
-				val.APIAddress, lease.State.String(), lease.LeaseID.OSeq, providerAddrBase64),
+				val.APIAddress, lease.State.String(), lease.LeaseID.OSeq, lease.LeaseID.Provider),
 			false,
 			lease,
 			1,
@@ -489,10 +470,6 @@ func (s *IntegrationTestSuite) TestGetLease() {
 	val := s.network.Validators[0]
 	lease := s.lease
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(lease.LeaseID.Owner)
-	providerAddrBase64 := base64.URLEncoding.EncodeToString(lease.LeaseID.Provider)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -508,21 +485,22 @@ func (s *IntegrationTestSuite) TestGetLease() {
 		{
 			"get lease with invalid input",
 			fmt.Sprintf("%s/akash/market/v1beta1/leases/info?id.owner=%s", val.APIAddress,
-				ownerAddrBase64),
+				lease.LeaseID.Owner),
 			true,
 			types.Lease{},
 		},
 		{
 			"lease not found",
 			fmt.Sprintf("%s/akash/market/v1beta1/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
-				val.APIAddress, providerAddrBase64, 249, 32, 235, ownerAddrBase64),
+				val.APIAddress, lease.LeaseID.Provider, 249, 32, 235, lease.LeaseID.Owner),
 			true,
 			types.Lease{},
 		},
 		{
 			"valid get lease request",
 			fmt.Sprintf("%s/akash/market/v1beta1/leases/info?id.owner=%s&id.dseq=%d&id.gseq=%d&id.oseq=%d&id.provider=%s",
-				val.APIAddress, ownerAddrBase64, lease.LeaseID.DSeq, lease.LeaseID.GSeq, lease.LeaseID.OSeq, providerAddrBase64),
+				val.APIAddress, lease.LeaseID.Owner, lease.LeaseID.DSeq, lease.LeaseID.GSeq,
+				lease.LeaseID.OSeq, lease.LeaseID.Provider),
 			false,
 			lease,
 		},
