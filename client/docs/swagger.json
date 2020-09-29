@@ -25,8 +25,7 @@
                           "type": "object",
                           "properties": {
                             "owner": {
-                              "type": "string",
-                              "format": "byte"
+                              "type": "string"
                             },
                             "dseq": {
                               "type": "string",
@@ -62,8 +61,7 @@
                             "type": "object",
                             "properties": {
                               "owner": {
-                                "type": "string",
-                                "format": "byte"
+                                "type": "string"
                               },
                               "dseq": {
                                 "type": "string",
@@ -218,8 +216,7 @@
             "name": "id.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "id.dseq",
@@ -256,8 +253,7 @@
                             "type": "object",
                             "properties": {
                               "owner": {
-                                "type": "string",
-                                "format": "byte"
+                                "type": "string"
                               },
                               "dseq": {
                                 "type": "string",
@@ -293,8 +289,7 @@
                               "type": "object",
                               "properties": {
                                 "owner": {
-                                  "type": "string",
-                                  "format": "byte"
+                                  "type": "string"
                                 },
                                 "dseq": {
                                   "type": "string",
@@ -418,7 +413,7 @@
                       "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
                     }
                   },
-                  "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+                  "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
                 }
               },
               "title": "QueryDeploymentsResponse is response type for the Query/Deployments RPC method"
@@ -466,8 +461,7 @@
             "name": "filters.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.dseq",
@@ -508,7 +502,7 @@
           },
           {
             "name": "pagination.count_total",
-            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set.",
+            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -537,8 +531,7 @@
                       "type": "object",
                       "properties": {
                         "owner": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         },
                         "dseq": {
                           "type": "string",
@@ -685,8 +678,7 @@
             "name": "id.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "id.dseq",
@@ -725,8 +717,7 @@
                       "type": "object",
                       "properties": {
                         "owner": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         },
                         "dseq": {
                           "type": "string",
@@ -741,8 +732,7 @@
                           "format": "int64"
                         },
                         "provider": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         }
                       },
                       "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -821,8 +811,7 @@
             "name": "id.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "id.dseq",
@@ -849,8 +838,7 @@
             "name": "id.provider",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           }
         ],
         "tags": [
@@ -877,8 +865,7 @@
                         "type": "object",
                         "properties": {
                           "owner": {
-                            "type": "string",
-                            "format": "byte"
+                            "type": "string"
                           },
                           "dseq": {
                             "type": "string",
@@ -893,8 +880,7 @@
                             "format": "int64"
                           },
                           "provider": {
-                            "type": "string",
-                            "format": "byte"
+                            "type": "string"
                           }
                         },
                         "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -942,7 +928,7 @@
                       "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
                     }
                   },
-                  "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+                  "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
                 }
               },
               "title": "QueryBidsResponse is response type for the Query/Bids RPC method"
@@ -990,8 +976,7 @@
             "name": "filters.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.dseq",
@@ -1018,8 +1003,7 @@
             "name": "filters.provider",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.state",
@@ -1053,7 +1037,7 @@
           },
           {
             "name": "pagination.count_total",
-            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set.",
+            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -1082,8 +1066,7 @@
                       "type": "object",
                       "properties": {
                         "owner": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         },
                         "dseq": {
                           "type": "string",
@@ -1098,8 +1081,7 @@
                           "format": "int64"
                         },
                         "provider": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         }
                       },
                       "title": "LeaseID stores bid details of lease"
@@ -1177,8 +1159,7 @@
             "name": "id.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "id.dseq",
@@ -1205,8 +1186,7 @@
             "name": "id.provider",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1233,8 +1213,7 @@
                         "type": "object",
                         "properties": {
                           "owner": {
-                            "type": "string",
-                            "format": "byte"
+                            "type": "string"
                           },
                           "dseq": {
                             "type": "string",
@@ -1249,8 +1228,7 @@
                             "format": "int64"
                           },
                           "provider": {
-                            "type": "string",
-                            "format": "byte"
+                            "type": "string"
                           }
                         },
                         "title": "LeaseID stores bid details of lease"
@@ -1297,7 +1275,7 @@
                       "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
                     }
                   },
-                  "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+                  "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
                 }
               },
               "title": "QueryLeasesResponse is response type for the Query/Leases RPC method"
@@ -1345,8 +1323,7 @@
             "name": "filters.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.dseq",
@@ -1373,8 +1350,7 @@
             "name": "filters.provider",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.state",
@@ -1408,7 +1384,7 @@
           },
           {
             "name": "pagination.count_total",
-            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set.",
+            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -1437,8 +1413,7 @@
                       "type": "object",
                       "properties": {
                         "owner": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         },
                         "dseq": {
                           "type": "string",
@@ -1595,8 +1570,7 @@
             "name": "id.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "id.dseq",
@@ -1644,8 +1618,7 @@
                         "type": "object",
                         "properties": {
                           "owner": {
-                            "type": "string",
-                            "format": "byte"
+                            "type": "string"
                           },
                           "dseq": {
                             "type": "string",
@@ -1771,7 +1744,7 @@
                       "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
                     }
                   },
-                  "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+                  "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
                 }
               },
               "title": "QueryOrdersResponse is response type for the Query/Orders RPC method"
@@ -1819,8 +1792,7 @@
             "name": "filters.owner",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           {
             "name": "filters.dseq",
@@ -1875,7 +1847,7 @@
           },
           {
             "name": "pagination.count_total",
-            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set.",
+            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -1903,8 +1875,7 @@
                     "type": "object",
                     "properties": {
                       "owner": {
-                        "type": "string",
-                        "format": "byte"
+                        "type": "string"
                       },
                       "host_uri": {
                         "type": "string"
@@ -1942,7 +1913,7 @@
                       "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
                     }
                   },
-                  "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+                  "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
                 }
               },
               "title": "QueryProvidersResponse is response type for the Query/Providers RPC method"
@@ -2012,7 +1983,7 @@
           },
           {
             "name": "pagination.count_total",
-            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set.",
+            "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set.",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -2038,8 +2009,7 @@
                   "type": "object",
                   "properties": {
                     "owner": {
-                      "type": "string",
-                      "format": "byte"
+                      "type": "string"
                     },
                     "host_uri": {
                       "type": "string"
@@ -2108,8 +2078,7 @@
             "name": "owner",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           }
         ],
         "tags": [
@@ -10300,8 +10269,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "dseq": {
               "type": "string",
@@ -10343,8 +10311,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -10360,8 +10327,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -10380,8 +10346,7 @@
               "type": "object",
               "properties": {
                 "owner": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 },
                 "dseq": {
                   "type": "string",
@@ -10417,8 +10382,7 @@
                 "type": "object",
                 "properties": {
                   "owner": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   },
                   "dseq": {
                     "type": "string",
@@ -10534,8 +10498,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "dseq": {
               "type": "string",
@@ -10654,8 +10617,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -10752,8 +10714,7 @@
                   "type": "object",
                   "properties": {
                     "owner": {
-                      "type": "string",
-                      "format": "byte"
+                      "type": "string"
                     },
                     "dseq": {
                       "type": "string",
@@ -10789,8 +10750,7 @@
                     "type": "object",
                     "properties": {
                       "owner": {
-                        "type": "string",
-                        "format": "byte"
+                        "type": "string"
                       },
                       "dseq": {
                         "type": "string",
@@ -10917,8 +10877,7 @@
                     "type": "object",
                     "properties": {
                       "owner": {
-                        "type": "string",
-                        "format": "byte"
+                        "type": "string"
                       },
                       "dseq": {
                         "type": "string",
@@ -10954,8 +10913,7 @@
                       "type": "object",
                       "properties": {
                         "owner": {
-                          "type": "string",
-                          "format": "byte"
+                          "type": "string"
                         },
                         "dseq": {
                           "type": "string",
@@ -11079,7 +11037,7 @@
               "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
             }
           },
-          "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+          "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
         }
       },
       "title": "QueryDeploymentsResponse is response type for the Query/Deployments RPC method"
@@ -11094,8 +11052,7 @@
               "type": "object",
               "properties": {
                 "owner": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 },
                 "dseq": {
                   "type": "string",
@@ -11272,7 +11229,7 @@
         "count_total": {
           "type": "boolean",
           "format": "boolean",
-          "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs. count_total\nis only respected when offset is used. It is ignored when key is set."
+          "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
         }
       },
       "description": "message SomeRequest {\n         Foo some_parameter = 1;\n         PageRequest pagination = 2;\n }",
@@ -11292,7 +11249,7 @@
           "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
         }
       },
-      "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+      "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
     },
     "cosmos.base.v1beta1.Coin": {
       "type": "object",
@@ -11361,8 +11318,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "dseq": {
               "type": "string",
@@ -11377,8 +11333,7 @@
               "format": "int64"
             },
             "provider": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             }
           },
           "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -11428,8 +11383,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11444,8 +11398,7 @@
           "format": "int64"
         },
         "provider": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "state": {
           "type": "string"
@@ -11457,8 +11410,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11473,8 +11425,7 @@
           "format": "int64"
         },
         "provider": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         }
       },
       "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -11486,8 +11437,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "dseq": {
               "type": "string",
@@ -11502,8 +11452,7 @@
               "format": "int64"
             },
             "provider": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             }
           },
           "title": "LeaseID stores bid details of lease"
@@ -11551,8 +11500,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11567,8 +11515,7 @@
           "format": "int64"
         },
         "provider": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "state": {
           "type": "string"
@@ -11580,8 +11527,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11596,8 +11542,7 @@
           "format": "int64"
         },
         "provider": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         }
       },
       "title": "LeaseID stores bid details of lease"
@@ -11609,8 +11554,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "dseq": {
               "type": "string",
@@ -11737,8 +11681,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11762,8 +11705,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "dseq": {
           "type": "string",
@@ -11790,8 +11732,7 @@
               "type": "object",
               "properties": {
                 "owner": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 },
                 "dseq": {
                   "type": "string",
@@ -11806,8 +11747,7 @@
                   "format": "int64"
                 },
                 "provider": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 }
               },
               "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -11855,8 +11795,7 @@
                 "type": "object",
                 "properties": {
                   "owner": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   },
                   "dseq": {
                     "type": "string",
@@ -11871,8 +11810,7 @@
                     "format": "int64"
                   },
                   "provider": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   }
                 },
                 "description": "BidID stores owner and all other seq numbers\nA successful bid becomes a Lease(ID)."
@@ -11920,7 +11858,7 @@
               "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
             }
           },
-          "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+          "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
         }
       },
       "title": "QueryBidsResponse is response type for the Query/Bids RPC method"
@@ -11935,8 +11873,7 @@
               "type": "object",
               "properties": {
                 "owner": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 },
                 "dseq": {
                   "type": "string",
@@ -11951,8 +11888,7 @@
                   "format": "int64"
                 },
                 "provider": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 }
               },
               "title": "LeaseID stores bid details of lease"
@@ -11999,8 +11935,7 @@
                 "type": "object",
                 "properties": {
                   "owner": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   },
                   "dseq": {
                     "type": "string",
@@ -12015,8 +11950,7 @@
                     "format": "int64"
                   },
                   "provider": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   }
                 },
                 "title": "LeaseID stores bid details of lease"
@@ -12063,7 +11997,7 @@
               "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
             }
           },
-          "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+          "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
         }
       },
       "title": "QueryLeasesResponse is response type for the Query/Leases RPC method"
@@ -12078,8 +12012,7 @@
               "type": "object",
               "properties": {
                 "owner": {
-                  "type": "string",
-                  "format": "byte"
+                  "type": "string"
                 },
                 "dseq": {
                   "type": "string",
@@ -12205,8 +12138,7 @@
                 "type": "object",
                 "properties": {
                   "owner": {
-                    "type": "string",
-                    "format": "byte"
+                    "type": "string"
                   },
                   "dseq": {
                     "type": "string",
@@ -12332,7 +12264,7 @@
               "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
             }
           },
-          "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+          "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
         }
       },
       "title": "QueryOrdersResponse is response type for the Query/Orders RPC method"
@@ -12341,8 +12273,7 @@
       "type": "object",
       "properties": {
         "owner": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "host_uri": {
           "type": "string"
@@ -12372,8 +12303,7 @@
           "type": "object",
           "properties": {
             "owner": {
-              "type": "string",
-              "format": "byte"
+              "type": "string"
             },
             "host_uri": {
               "type": "string"
@@ -12408,8 +12338,7 @@
             "type": "object",
             "properties": {
               "owner": {
-                "type": "string",
-                "format": "byte"
+                "type": "string"
               },
               "host_uri": {
                 "type": "string"
@@ -12447,7 +12376,7 @@
               "title": "total is total number of results available if PageRequest.count_total\nwas set, its value is undefined otherwise"
             }
           },
-          "description": "PageResponse is to be embedded in gRPC response messages where the corresponding\nrequest message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+          "description": "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
         }
       },
       "title": "QueryProvidersResponse is response type for the Query/Providers RPC method"
