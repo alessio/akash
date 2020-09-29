@@ -1,7 +1,6 @@
 package client_test
 
 import (
-	"encoding/base64"
 	"fmt"
 	"path/filepath"
 	"testing"
@@ -116,9 +115,6 @@ func (s *IntegrationTestSuite) TestGetProvider() {
 	val := s.network.Validators[0]
 	provider := s.provider
 
-	// TODO: need to pass bech32 string instead of base64 encoding string
-	ownerAddrBase64 := base64.URLEncoding.EncodeToString(provider.Owner)
-
 	testCases := []struct {
 		name    string
 		url     string
@@ -139,7 +135,7 @@ func (s *IntegrationTestSuite) TestGetProvider() {
 		},
 		{
 			"valid get provider request",
-			fmt.Sprintf("%s/akash/provider/v1beta1/providers/%s", val.APIAddress, ownerAddrBase64),
+			fmt.Sprintf("%s/akash/provider/v1beta1/providers/%s", val.APIAddress, provider.Owner),
 			false,
 			provider,
 		},
