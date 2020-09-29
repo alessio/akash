@@ -8,12 +8,12 @@ import (
 
 // Equals method compares specific deployment with provided deployment
 func (id DeploymentID) Equals(other DeploymentID) bool {
-	return id.Owner.Equals(other.Owner) && id.DSeq == other.DSeq
+	return id.Owner == other.Owner && id.DSeq == other.DSeq
 }
 
 // Validate method for DeploymentID and returns nil
 func (id DeploymentID) Validate() error {
-	err := sdk.VerifyAddressFormat(id.Owner)
+	_, err := sdk.AccAddressFromBech32(id.Owner)
 	switch {
 	case err != nil:
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "DeploymentID: Invalid Owner Address")
@@ -25,7 +25,11 @@ func (id DeploymentID) Validate() error {
 
 // String method for deployment IDs
 func (id DeploymentID) String() string {
-	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, nil, nil, nil)
+	owner, err := sdk.AccAddressFromBech32(id.Owner)
+	if err != nil {
+		panic(err)
+	}
+	return sdkutil.FmtBlockID(&owner, &id.DSeq, nil, nil, nil)
 }
 
 // MakeGroupID returns GroupID instance with provided deployment details
@@ -64,5 +68,9 @@ func (id GroupID) Validate() error {
 
 // String method provides human readable representation of GroupID.
 func (id GroupID) String() string {
-	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, nil, nil)
+	owner, err := sdk.AccAddressFromBech32(id.Owner)
+	if err != nil {
+		panic(err)
+	}
+	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, nil, nil)
 }
