@@ -98,7 +98,10 @@ func TestCreateBidValid(t *testing.T) {
 	require.NotNil(t, res)
 	require.NoError(t, err)
 
-	bid := types.MakeBidID(order.ID(), provider)
+	providerAddr, err := sdk.AccAddressFromBech32(provider)
+	require.NoError(t, err)
+
+	bid := types.MakeBidID(order.ID(), providerAddr)
 
 	t.Run("ensure event created", func(t *testing.T) {
 		iev := testutil.ParseMarketEvent(t, res.Events[2:])
@@ -130,7 +133,10 @@ func TestCreateBidInvalidPrice(t *testing.T) {
 	require.Error(t, err)
 	require.EqualError(t, err, types.ErrBidInvalidPrice.Error())
 
-	_, found := suite.mkeeper.GetBid(suite.ctx, types.MakeBidID(order.ID(), provider))
+	providerAddr, err := sdk.AccAddressFromBech32(provider)
+	require.NoError(t, err)
+
+	_, found := suite.mkeeper.GetBid(suite.ctx, types.MakeBidID(order.ID(), providerAddr))
 	require.False(t, found)
 }
 
@@ -139,7 +145,7 @@ func TestCreateBidNonExistingOrder(t *testing.T) {
 
 	msg := &types.MsgCreateBid{
 		Order:    types.OrderID{},
-		Provider: nil,
+		Provider: "",
 		Price:    sdk.Coin{},
 	}
 
@@ -147,7 +153,9 @@ func TestCreateBidNonExistingOrder(t *testing.T) {
 	require.Nil(t, res)
 	require.EqualError(t, err, types.ErrInvalidOrder.Error())
 
-	_, found := suite.mkeeper.GetBid(suite.ctx, types.MakeBidID(msg.Order, msg.Provider))
+	providerAddr, _ := sdk.AccAddressFromBech32(msg.Provider)
+
+	_, found := suite.mkeeper.GetBid(suite.ctx, types.MakeBidID(msg.Order, providerAddr))
 	require.False(t, found)
 }
 
@@ -197,7 +205,7 @@ func TestCreateBidInvalidProvider(t *testing.T) {
 
 	msg := &types.MsgCreateBid{
 		Order:    order.ID(),
-		Provider: nil,
+		Provider: "",
 		Price:    sdk.NewCoin(testutil.CoinDenom, sdk.NewInt(1)),
 	}
 
@@ -299,8 +307,11 @@ func TestCloseBidNonExisting(t *testing.T) {
 
 	provider := suite.createProvider(gspec.Requirements).Owner
 
+	providerAddr, err := sdk.AccAddressFromBech32(provider)
+	require.NoError(t, err)
+
 	msg := &types.MsgCloseBid{
-		BidID: types.MakeBidID(order.ID(), provider),
+		BidID: types.MakeBidID(order.ID(), providerAddr),
 	}
 
 	res, err := suite.handler(suite.ctx, msg)
@@ -430,7 +441,7 @@ func (st *testSuite) createBid() (types.Bid, types.Order) {
 	require.NoError(st.t, err)
 	require.Equal(st.t, order.ID(), bid.ID().OrderID())
 	require.Equal(st.t, price, bid.Price)
-	require.Equal(st.t, provider, bid.ID().Provider)
+	require.Equal(st.t, provider.String(), bid.ID().Provider)
 	return bid, order
 }
 
@@ -452,7 +463,7 @@ func (st *testSuite) createProvider(attr []sdk.Attribute) ptypes.Provider {
 	st.t.Helper()
 
 	prov := ptypes.Provider{
-		Owner:      testutil.AccAddress(st.t),
+		Owner:      testutil.AccAddress(st.t).String(),
 		HostURI:    "thinker://tailor.soldier?sailor",
 		Attributes: attr,
 	}

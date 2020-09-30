@@ -22,8 +22,8 @@ func TestBlockIDStringer(t *testing.T) {
 	buf, err := hex.DecodeString(hexRaw)
 	acc := sdk.AccAddress(buf)
 	assert.NoError(t, err)
-	d, g, o := uint64(10), uint32(0), uint32(0)
-	x := sdkutil.FmtBlockID(&acc, &d, &g, &o, nil)
+	a, d, g, o := acc.String(), uint64(10), uint32(0), uint32(0)
+	x := sdkutil.FmtBlockID(&a, &d, &g, &o, nil)
 	assert.Equal(t, x, "akash18lmgky6fq0lvkqnuj77stg0r648stl8ucf0m2z/10/0/0")
 
 	//neh := "211E4C7BB9D12D57E10BE88EB8EE8351031BF14B"
@@ -31,14 +31,15 @@ func TestBlockIDStringer(t *testing.T) {
 	buf, err = hex.DecodeString(hexRaw)
 	acc = sdk.AccAddress(buf)
 	assert.NoError(t, err)
-	x = sdkutil.FmtBlockID(&acc, &d, &g, &o, nil)
+	a = acc.String()
+	x = sdkutil.FmtBlockID(&a, &d, &g, &o, nil)
 	assert.Equal(t, x, "akash153hprpkkfsh9ydtnhkkhpfvryz26hhpp67e97k/10/0/0")
 
-	addr := testutil.AccAddress(t)
+	addr := testutil.AccAddress(t).String()
 	dseq := uint64(10)
 	gseq := uint32(5)
 	oseq := uint32(3)
-	provider := testutil.AccAddress(t)
+	provider := testutil.AccAddress(t).String()
 	fmtStr := sdkutil.FmtBlockID(&addr, &dseq, &gseq, &oseq, &provider)
 
 	b, err := sdkutil.ParseBlockID(fmtStr)

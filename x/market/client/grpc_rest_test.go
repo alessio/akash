@@ -78,7 +78,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.Require().NoError(err)
 	s.Require().Len(result.Orders, 1)
 	orders := result.Orders
-	s.Require().Equal(val.Address.String(), orders[0].OrderID.Owner.String())
+	s.Require().Equal(val.Address.String(), orders[0].OrderID.Owner)
 
 	// test query order
 	s.order = orders[0]
@@ -136,7 +136,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.Require().NoError(err)
 	s.Require().Len(bidRes.Bids, 1)
 	bids := bidRes.Bids
-	s.Require().Equal(keyBar.GetAddress().String(), bids[0].BidID.Provider.String())
+	s.Require().Equal(keyBar.GetAddress().String(), bids[0].BidID.Provider)
 
 	s.bid = bids[0]
 
@@ -149,7 +149,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	s.Require().NoError(err)
 	s.Require().Len(leaseRes.Leases, 1)
 	leases := leaseRes.Leases
-	s.Require().Equal(keyBar.GetAddress().String(), leases[0].LeaseID.Provider.String())
+	s.Require().Equal(keyBar.GetAddress().String(), leases[0].LeaseID.Provider)
 
 	s.order.State = types.OrderMatched
 	s.bid.State = types.BidMatched

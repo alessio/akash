@@ -133,10 +133,6 @@ func (test providerTestParams) testCreate() func(t *testing.T) {
 		if len(sb) == 0 {
 			t.Error("no signed bytes returned")
 		}
-		ob := msg.GetSigners()
-		if len(ob) == 0 {
-			t.Error("no owners returned from valid message")
-		}
 	}
 }
 
@@ -156,10 +152,6 @@ func (test providerTestParams) testUpdate() func(t *testing.T) {
 		if len(sb) == 0 {
 			t.Error("no signed bytes returned")
 		}
-		ob := msg.GetSigners()
-		if len(ob) == 0 {
-			t.Error("no owners returned from valid message")
-		}
 	}
 }
 
@@ -177,17 +169,13 @@ func (test providerTestParams) testDelete() func(t *testing.T) {
 		if len(sb) == 0 {
 			t.Error("no signed bytes returned")
 		}
-		ob := msg.GetSigners()
-		if len(ob) == 0 {
-			t.Error("no owners returned from valid message")
-		}
 	}
 }
 
 var msgCreateTests = []providerTestParams{
 	{
 		msg: Provider{
-			Owner:   sdk.AccAddress("hihi"),
+			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "http://localhost:3001",
 			Attributes: []sdk.Attribute{
 				{
@@ -200,7 +188,7 @@ var msgCreateTests = []providerTestParams{
 	},
 	{
 		msg: Provider{
-			Owner:   sdk.AccAddress(""),
+			Owner:   sdk.AccAddress("").String(),
 			HostURI: "http://localhost:3001",
 			Attributes: []sdk.Attribute{
 				{
@@ -214,7 +202,7 @@ var msgCreateTests = []providerTestParams{
 	},
 	{
 		msg: Provider{
-			Owner:   sdk.AccAddress("hihi"),
+			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "ht tp://foo.com",
 			Attributes: []sdk.Attribute{
 				{
@@ -227,7 +215,7 @@ var msgCreateTests = []providerTestParams{
 	},
 	{
 		msg: Provider{
-			Owner:   sdk.AccAddress("hihi"),
+			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "",
 			Attributes: []sdk.Attribute{
 				{

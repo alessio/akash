@@ -21,16 +21,16 @@ const (
 
 // BlockID provides type to properly format print blockchain ID types.
 type BlockID struct {
-	Owner    *sdk.AccAddress
+	Owner    *string
 	DSeq     *uint64
 	GSeq     *uint32
 	OSeq     *uint32
-	Provider *sdk.AccAddress
+	Provider *string
 }
 
 // NewBlockID initializes the BlockID struct, passing nil values is acceptable
 // for fields which are not used.
-func NewBlockID(owner *sdk.AccAddress, dseq *uint64, gseq *uint32, oseq *uint32, provider *sdk.AccAddress) BlockID {
+func NewBlockID(owner *string, dseq *uint64, gseq *uint32, oseq *uint32, provider *string) BlockID {
 	return BlockID{
 		Owner:    owner,
 		DSeq:     dseq,
@@ -46,7 +46,7 @@ func NewBlockID(owner *sdk.AccAddress, dseq *uint64, gseq *uint32, oseq *uint32,
 func (b BlockID) String() string {
 	parts := make([]string, 0)
 	if b.Owner != nil {
-		parts = append(parts, b.Owner.String())
+		parts = append(parts, *b.Owner)
 	}
 	if b.DSeq != nil {
 		parts = append(parts, strconv.FormatUint(*b.DSeq, 10))
@@ -58,7 +58,7 @@ func (b BlockID) String() string {
 		parts = append(parts, strconv.FormatUint(uint64(*b.OSeq), 10))
 	}
 	if b.Provider != nil {
-		parts = append(parts, b.Provider.String())
+		parts = append(parts, *b.Provider)
 	}
 	return path.Join(parts...)
 }
@@ -76,10 +76,13 @@ func ReflectBlockID(id interface{}) BlockID {
 		field := val.Field(i)
 		switch typeOfID.Field(i).Name {
 		case "Owner":
-			if field.Type() == reflect.TypeOf(sdk.AccAddress{}) {
-				x, ok := field.Interface().(sdk.AccAddress)
-				if ok && len(x) == sdk.AddrLen {
-					b.Owner = &x
+			if field.Type() == reflect.TypeOf(string("")) {
+				x, ok := field.Interface().(string)
+				if ok {
+					addr, err := sdk.AccAddressFromBech32(x)
+					if err == nil && len(addr) == sdk.AddrLen {
+						b.Owner = &x
+					}
 				}
 			}
 		case "DSeq":
@@ -104,21 +107,25 @@ func ReflectBlockID(id interface{}) BlockID {
 				}
 			}
 		case "Provider":
-			if field.Type() == reflect.TypeOf(sdk.AccAddress{}) {
-				x, ok := field.Interface().(sdk.AccAddress)
-				if ok && len(x) == sdk.AddrLen {
-					b.Provider = &x
+			if field.Type() == reflect.TypeOf(string("")) {
+				x, ok := field.Interface().(string)
+				if ok {
+					addr, err := sdk.AccAddressFromBech32(x)
+					if err == nil && len(addr) == sdk.AddrLen {
+						b.Provider = &x
+					}
 				}
 			}
 		default:
 			// Skip this field
 		}
 	}
+
 	return b
 }
 
 // FmtBlockID provides a human readable representation of the block chain ID fields.
-func FmtBlockID(owner *sdk.AccAddress, dseq *uint64, gseq *uint32, oseq *uint32, provider *sdk.AccAddress) string {
+func FmtBlockID(owner *string, dseq *uint64, gseq *uint32, oseq *uint32, provider *string) string {
 	return BlockID{
 		Owner:    owner,
 		DSeq:     dseq,
@@ -142,7 +149,7 @@ func ParseBlockID(id string) (*BlockID, error) {
 	if err != nil {
 		return nil, errors.Wrap(ErrParsingBlockID, err.Error())
 	} else if len(aa) > 0 {
-		b.Owner = &aa
+		b.Owner = &parts[blockIDOwnerPosition]
 	}
 
 	if len(parts) > blockIDDSeqPosition { // DSeq
@@ -172,11 +179,11 @@ func ParseBlockID(id string) (*BlockID, error) {
 	}
 
 	if len(parts) > blockIDProviderPostion { // Provider
-		pa, err := sdk.AccAddressFromBech32(parts[4])
+		_, err := sdk.AccAddressFromBech32(parts[4])
 		if err != nil {
 			return nil, errors.Wrap(ErrParsingBlockID, err.Error())
 		}
-		b.Provider = &pa
+		b.Provider = &parts[4]
 	}
 	return b, nil
 }

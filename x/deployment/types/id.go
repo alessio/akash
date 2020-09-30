@@ -25,11 +25,7 @@ func (id DeploymentID) Validate() error {
 
 // String method for deployment IDs
 func (id DeploymentID) String() string {
-	owner, err := sdk.AccAddressFromBech32(id.Owner)
-	if err != nil {
-		panic(err)
-	}
-	return sdkutil.FmtBlockID(&owner, &id.DSeq, nil, nil, nil)
+	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, nil, nil, nil)
 }
 
 // MakeGroupID returns GroupID instance with provided deployment details
@@ -68,9 +64,5 @@ func (id GroupID) Validate() error {
 
 // String method provides human readable representation of GroupID.
 func (id GroupID) String() string {
-	owner, err := sdk.AccAddressFromBech32(id.Owner)
-	if err != nil {
-		panic(err)
-	}
-	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, nil, nil)
+	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, nil, nil)
 }

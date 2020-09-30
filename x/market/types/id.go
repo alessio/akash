@@ -46,11 +46,7 @@ func (id OrderID) Validate() error {
 
 // String provides stringer interface to save reflected formatting.
 func (id OrderID) String() string {
-	owner, err := sdk.AccAddressFromBech32(id.Owner)
-	if err != nil {
-		panic(err)
-	}
-	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, nil)
+	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, nil)
 }
 
 // MakeBidID returns BidID instance with provided order details and provider
@@ -87,17 +83,7 @@ func (id BidID) OrderID() OrderID {
 
 // String method for consistent output.
 func (id BidID) String() string {
-	owner, err := sdk.AccAddressFromBech32(id.Owner)
-	if err != nil {
-		panic(err)
-	}
-
-	provider, err := sdk.AccAddressFromBech32(id.Provider)
-	if err != nil {
-		panic(err)
-	}
-
-	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, &provider)
+	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, &id.Provider)
 }
 
 // OrderIDString provides consistent conversion to string values for OrderID.
@@ -171,15 +157,5 @@ func (id LeaseID) DeploymentID() dtypes.DeploymentID {
 
 // String method provides human readable representation of LeaseID.
 func (id LeaseID) String() string {
-	owner, err := sdk.AccAddressFromBech32(id.Owner)
-	if err != nil {
-		panic(err)
-	}
-
-	provider, err := sdk.AccAddressFromBech32(id.Provider)
-	if err != nil {
-		panic(err)
-	}
-
-	return sdkutil.FmtBlockID(&owner, &id.DSeq, &id.GSeq, &id.OSeq, &provider)
+	return sdkutil.FmtBlockID(&id.Owner, &id.DSeq, &id.GSeq, &id.OSeq, &id.Provider)
 }

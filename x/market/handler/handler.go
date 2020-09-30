@@ -44,7 +44,7 @@ func handleMsgCreateBid(ctx sdk.Context, keepers Keepers, msg *types.MsgCreateBi
 
 	provider, err := sdk.AccAddressFromBech32(msg.Provider)
 	if err != nil {
-		return nil, err
+		return nil, types.ErrEmptyProvider
 	}
 
 	var prov ptypes.Provider
