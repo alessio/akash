@@ -385,7 +385,7 @@ proto-swagger-gen: protoc-swagger
 	./script/protoc-swagger-gen.sh
 
 update-swagger-docs: proto-swagger-gen
-	statik -src=client/docs -dest=client/docs -f -m
+	statik -src=client/docs/swagger-ui -dest=client/docs -f -m
 	if [ -n "$(git status --porcelain)" ]; then \
         echo "\033[91mSwagger docs are out of sync!!!\033[0m";\
         exit 1;\
