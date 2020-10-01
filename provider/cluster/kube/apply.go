@@ -28,8 +28,8 @@ func applyNS(ctx context.Context, kc kubernetes.Interface, b *nsBuilder) error {
 	return err
 }
 
+// Apply list of Network Policies
 func applyNetPolicies(ctx context.Context, kc kubernetes.Interface, b *netPolBuilder) error {
-	// TODO: Apply list of Network Policies
 	var err error
 	var obj *netv1.NetworkPolicy
 
