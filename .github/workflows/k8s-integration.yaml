@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-go@v2
       - uses: engineerd/setup-kind@v0.4.0
         with:
-          config: ./_run/kube/kind-config.yaml
+          config: ./_run/kind-config-calico.yaml
       - name: Docker Status
         run: docker ps -a
       - name: Setup Ingress K8S
