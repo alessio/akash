@@ -26,3 +26,5 @@ coverage.txt
 .cache
 
 /tmp-swagger-gen
+
+.release-env
