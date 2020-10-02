@@ -254,13 +254,18 @@ func newNetPolBuilder(settings settings, lid mtypes.LeaseID, group *manifest.Gro
 	return &netPolBuilder{builder: builder{settings: settings, lid: lid, group: group}}
 }
 
+const (
+	netPolIngressDenyAll       = "ingress-deny-all"
+	netPolIngressInternalAllow = "ingress-allow-internal"
+)
+
 // Create a set of NetworkPolicies to restrict the ingress traffic to a Tenant's
 // Deployment namespace.
 func (b *netPolBuilder) create() ([]*netv1.NetworkPolicy, error) { // nolint:golint,unparam
 	return []*netv1.NetworkPolicy{
 		{ // Deny all ingress to the tenant namespace. Separate tenant namespaces so they cannot
 			ObjectMeta: metav1.ObjectMeta{
-				Name:   "ingress-deny-all",
+				Name:   netPolIngressDenyAll,
 				Labels: b.labels(),
 			},
 			Spec: netv1.NetworkPolicySpec{
@@ -275,9 +280,9 @@ func (b *netPolBuilder) create() ([]*netv1.NetworkPolicy, error) { // nolint:gol
 			},
 		},
 
-		{ // Allow valid ingress to the tentant namespace from the metrics-server.
+		{ // Allow ingress between services within namespace.
 			ObjectMeta: metav1.ObjectMeta{
-				Name:   "ingress-allow-internal",
+				Name:   netPolIngressInternalAllow,
 				Labels: b.labels(),
 			},
 			Spec: netv1.NetworkPolicySpec{
