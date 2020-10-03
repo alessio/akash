@@ -8,6 +8,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/pkg/errors"
+
+	"github.com/ovrclk/akash/types"
 )
 
 func TestConfigPath(t *testing.T) {
@@ -177,7 +179,7 @@ var msgCreateTests = []providerTestParams{
 		msg: Provider{
 			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "http://localhost:3001",
-			Attributes: []sdk.Attribute{
+			Attributes: []types.Attribute{
 				{
 					Key:   "hihi",
 					Value: "neh",
@@ -190,7 +192,7 @@ var msgCreateTests = []providerTestParams{
 		msg: Provider{
 			Owner:   sdk.AccAddress("").String(),
 			HostURI: "http://localhost:3001",
-			Attributes: []sdk.Attribute{
+			Attributes: []types.Attribute{
 				{
 					Key:   "hihi",
 					Value: "neh",
@@ -204,7 +206,7 @@ var msgCreateTests = []providerTestParams{
 		msg: Provider{
 			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "ht tp://foo.com",
-			Attributes: []sdk.Attribute{
+			Attributes: []types.Attribute{
 				{
 					Key:   "hihi",
 					Value: "neh",
@@ -217,7 +219,7 @@ var msgCreateTests = []providerTestParams{
 		msg: Provider{
 			Owner:   sdk.AccAddress("hihi").String(),
 			HostURI: "",
-			Attributes: []sdk.Attribute{
+			Attributes: []types.Attribute{
 				{
 					Key:   "hihi",
 					Value: "neh",
