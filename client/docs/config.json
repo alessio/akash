@@ -16,7 +16,10 @@
       "url": "./tmp-swagger-gen/akash/provider/v1beta1/query.swagger.json"
     },
     {
-      "url": "./client/docs/swagger-sdk.json"
+      "url": "./vendor/github.com/cosmos/cosmos-sdk/client/docs/swagger-ui/swagger.yaml",
+      "dereference": {
+        "circular": "ignore"
+      }
     }
   ]
 }

@@ -274,6 +274,8 @@ github.com/regen-network/cosmos-proto/cosmos.proto
 	curl -sSL $(GOOGLE_API_PROTO_URL)/httpbody.proto > $(GOOGLE_PROTO_TYPES)/httpbody.proto
 	$(MODVENDOR) -copy="**/*.h **/*.c" -include=\
 github.com/zondax/hid
+	$(MODVENDOR) -copy="**/swagger.yaml" -include=\
+github.com/cosmos/cosmos-sdk/client/docs
 
 # Tools installation
 $(CACHE):
@@ -378,7 +380,7 @@ setup-devenv: $(GOLANGCI_LINT) $(BUF) $(PROTOC) $(GRPC_GATEWAY) $(MODVENDOR) pro
 .PHONY: setup-cienv
 setup-cienv: deps-vendor modvendor $(GOLANGCI_LINT)
 
-proto-swagger-gen: protoc-swagger
+proto-swagger-gen: protoc-swagger modvendor
 	./script/protoc-swagger-gen.sh
 
 update-swagger-docs: proto-swagger-gen
