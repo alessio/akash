@@ -2,6 +2,7 @@ package events
 
 import (
 	"context"
+	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/ovrclk/akash/pubsub"
@@ -94,6 +95,8 @@ func processEvents(bus pubsub.Bus, events []abci.Event) {
 }
 
 func processEvent(bev abci.Event) (interface{}, bool) {
+	msg, _ := sdk.ParseTypedEvent(bev)
+	fmt.Printf("Eve...%+v\n", msg)
 	ev, err := sdkutil.ParseEvent(sdk.StringifyEvent(bev))
 	if err != nil {
 		return nil, false
