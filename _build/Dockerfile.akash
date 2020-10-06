@@ -2,6 +2,6 @@ ARG GOLANG_VERSION
 
 FROM golang:${GOLANG_VERSION}-buster
 
-COPY ./akash .
+COPY ./akash /
 
 EXPOSE 26656 26657 26658
