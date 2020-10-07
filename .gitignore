@@ -24,7 +24,6 @@ dist
 coverage.txt
 
 .cache
+.release-env
 
 /tmp-swagger-gen
-
-.release-env

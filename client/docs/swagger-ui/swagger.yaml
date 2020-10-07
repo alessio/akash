@@ -100,31 +100,83 @@ paths:
                                     type: string
                                   value:
                                     type: string
-                                description: >-
-                                  Attribute defines an attribute wrapper where
-                                  the key and value are
-
-                                  strings instead of raw bytes.
                             resources:
                               type: array
                               items:
                                 type: object
                                 properties:
-                                  unit:
+                                  resources:
                                     type: object
                                     properties:
-                                      cpu:
-                                        type: integer
-                                        format: int64
+                                      CPU:
+                                        type: object
+                                        properties:
+                                          units:
+                                            type: object
+                                            properties:
+                                              val:
+                                                type: string
+                                                format: byte
+                                            title: >-
+                                              Unit stores cpu, memory and storage
+                                              metrics
+                                          attributes:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                key:
+                                                  type: string
+                                                value:
+                                                  type: string
                                       memory:
-                                        type: string
-                                        format: uint64
+                                        type: object
+                                        properties:
+                                          quantity:
+                                            type: object
+                                            properties:
+                                              val:
+                                                type: string
+                                                format: byte
+                                            title: >-
+                                              Unit stores cpu, memory and storage
+                                              metrics
+                                          attributes:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                key:
+                                                  type: string
+                                                value:
+                                                  type: string
                                       storage:
-                                        type: string
-                                        format: uint64
+                                        type: object
+                                        properties:
+                                          quantity:
+                                            type: object
+                                            properties:
+                                              val:
+                                                type: string
+                                                format: byte
+                                            title: >-
+                                              Unit stores cpu, memory and storage
+                                              metrics
+                                          attributes:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                key:
+                                                  type: string
+                                                value:
+                                                  type: string
                                     title: >-
-                                      Unit stores cpu, memory and storage
-                                      metrics
+                                      ResourceUnits describes all available
+                                      resources types for deployment/node etc
+
+                                      if field is nil resource is not present in
+                                      the given data-structure
                                   count:
                                     type: integer
                                     format: int64
@@ -162,7 +214,7 @@ paths:
               QueryDeploymentResponse is response type for the Query/Deployment
               RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -180,176 +232,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: id.owner
           in: query
@@ -463,31 +348,83 @@ paths:
                                       type: string
                                     value:
                                       type: string
-                                  description: >-
-                                    Attribute defines an attribute wrapper where
-                                    the key and value are
-
-                                    strings instead of raw bytes.
                               resources:
                                 type: array
                                 items:
                                   type: object
                                   properties:
-                                    unit:
+                                    resources:
                                       type: object
                                       properties:
-                                        cpu:
-                                          type: integer
-                                          format: int64
+                                        CPU:
+                                          type: object
+                                          properties:
+                                            units:
+                                              type: object
+                                              properties:
+                                                val:
+                                                  type: string
+                                                  format: byte
+                                              title: >-
+                                                Unit stores cpu, memory and storage
+                                                metrics
+                                            attributes:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  key:
+                                                    type: string
+                                                  value:
+                                                    type: string
                                         memory:
-                                          type: string
-                                          format: uint64
+                                          type: object
+                                          properties:
+                                            quantity:
+                                              type: object
+                                              properties:
+                                                val:
+                                                  type: string
+                                                  format: byte
+                                              title: >-
+                                                Unit stores cpu, memory and storage
+                                                metrics
+                                            attributes:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  key:
+                                                    type: string
+                                                  value:
+                                                    type: string
                                         storage:
-                                          type: string
-                                          format: uint64
+                                          type: object
+                                          properties:
+                                            quantity:
+                                              type: object
+                                              properties:
+                                                val:
+                                                  type: string
+                                                  format: byte
+                                              title: >-
+                                                Unit stores cpu, memory and storage
+                                                metrics
+                                            attributes:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  key:
+                                                    type: string
+                                                  value:
+                                                    type: string
                                       title: >-
-                                        Unit stores cpu, memory and storage
-                                        metrics
+                                        ResourceUnits describes all available
+                                        resources types for deployment/node etc
+
+                                        if field is nil resource is not present
+                                        in the given data-structure
                                     count:
                                       type: integer
                                       format: int64
@@ -554,7 +491,7 @@ paths:
               QueryDeploymentsResponse is response type for the
               Query/Deployments RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -572,176 +509,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: filters.owner
           in: query
@@ -803,7 +573,6 @@ paths:
           in: query
           required: false
           type: boolean
-          format: boolean
       tags:
         - Query
   /akash/deployment/v1beta1/groups/info:
@@ -867,29 +636,83 @@ paths:
                               type: string
                             value:
                               type: string
-                          description: >-
-                            Attribute defines an attribute wrapper where the key
-                            and value are
-
-                            strings instead of raw bytes.
                       resources:
                         type: array
                         items:
                           type: object
                           properties:
-                            unit:
+                            resources:
                               type: object
                               properties:
-                                cpu:
-                                  type: integer
-                                  format: int64
+                                CPU:
+                                  type: object
+                                  properties:
+                                    units:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 memory:
-                                  type: string
-                                  format: uint64
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 storage:
-                                  type: string
-                                  format: uint64
-                              title: 'Unit stores cpu, memory and storage metrics'
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
+                              title: >-
+                                ResourceUnits describes all available resources
+                                types for deployment/node etc
+
+                                if field is nil resource is not present in the
+                                given data-structure
                             count:
                               type: integer
                               format: int64
@@ -919,7 +742,7 @@ paths:
                 title: 'Group stores group id, state and specifications of group'
             title: QueryGroupResponse is response type for the Query/Group RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -937,176 +760,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: id.owner
           in: query
@@ -1194,7 +850,7 @@ paths:
                 title: 'Bid stores BidID, state of bid and price'
             title: QueryBidResponse is response type for the Query/Bid RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -1212,176 +868,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: id.owner
           in: query
@@ -1508,7 +997,7 @@ paths:
                    }
             title: QueryBidsResponse is response type for the Query/Bids RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -1526,176 +1015,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: filters.owner
           in: query
@@ -1772,7 +1094,6 @@ paths:
           in: query
           required: false
           type: boolean
-          format: boolean
       tags:
         - Query
   /akash/market/v1beta1/leases/info:
@@ -1840,7 +1161,7 @@ paths:
                 title: 'Lease stores LeaseID, state of lease and price'
             title: QueryLeaseResponse is response type for the Query/Lease RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -1858,176 +1179,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: id.owner
           in: query
@@ -2152,7 +1306,7 @@ paths:
               QueryLeasesResponse is response type for the Query/Leases RPC
               method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -2170,176 +1324,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: filters.owner
           in: query
@@ -2416,7 +1403,6 @@ paths:
           in: query
           required: false
           type: boolean
-          format: boolean
       tags:
         - Query
   /akash/market/v1beta1/orders/info:
@@ -2480,29 +1466,83 @@ paths:
                               type: string
                             value:
                               type: string
-                          description: >-
-                            Attribute defines an attribute wrapper where the key
-                            and value are
-
-                            strings instead of raw bytes.
                       resources:
                         type: array
                         items:
                           type: object
                           properties:
-                            unit:
+                            resources:
                               type: object
                               properties:
-                                cpu:
-                                  type: integer
-                                  format: int64
+                                CPU:
+                                  type: object
+                                  properties:
+                                    units:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 memory:
-                                  type: string
-                                  format: uint64
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 storage:
-                                  type: string
-                                  format: uint64
-                              title: 'Unit stores cpu, memory and storage metrics'
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
+                              title: >-
+                                ResourceUnits describes all available resources
+                                types for deployment/node etc
+
+                                if field is nil resource is not present in the
+                                given data-structure
                             count:
                               type: integer
                               format: int64
@@ -2535,7 +1575,7 @@ paths:
                 title: 'Order stores orderID, state of order and other details'
             title: QueryOrderResponse is response type for the Query/Order RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -2553,176 +1593,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: id.owner
           in: query
@@ -2809,29 +1682,83 @@ paths:
                                 type: string
                               value:
                                 type: string
-                            description: >-
-                              Attribute defines an attribute wrapper where the
-                              key and value are
-
-                              strings instead of raw bytes.
                         resources:
                           type: array
                           items:
                             type: object
                             properties:
-                              unit:
+                              resources:
                                 type: object
                                 properties:
-                                  cpu:
-                                    type: integer
-                                    format: int64
+                                  CPU:
+                                    type: object
+                                    properties:
+                                      units:
+                                        type: object
+                                        properties:
+                                          val:
+                                            type: string
+                                            format: byte
+                                        title: >-
+                                          Unit stores cpu, memory and storage
+                                          metrics
+                                      attributes:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
                                   memory:
-                                    type: string
-                                    format: uint64
+                                    type: object
+                                    properties:
+                                      quantity:
+                                        type: object
+                                        properties:
+                                          val:
+                                            type: string
+                                            format: byte
+                                        title: >-
+                                          Unit stores cpu, memory and storage
+                                          metrics
+                                      attributes:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
                                   storage:
-                                    type: string
-                                    format: uint64
-                                title: 'Unit stores cpu, memory and storage metrics'
+                                    type: object
+                                    properties:
+                                      quantity:
+                                        type: object
+                                        properties:
+                                          val:
+                                            type: string
+                                            format: byte
+                                        title: >-
+                                          Unit stores cpu, memory and storage
+                                          metrics
+                                      attributes:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            key:
+                                              type: string
+                                            value:
+                                              type: string
+                                title: >-
+                                  ResourceUnits describes all available
+                                  resources types for deployment/node etc
+
+                                  if field is nil resource is not present in the
+                                  given data-structure
                               count:
                                 type: integer
                                 format: int64
@@ -2893,7 +1820,7 @@ paths:
               QueryOrdersResponse is response type for the Query/Orders RPC
               method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -2911,176 +1838,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: filters.owner
           in: query
@@ -3152,7 +1912,6 @@ paths:
           in: query
           required: false
           type: boolean
-          format: boolean
       tags:
         - Query
   /akash/provider/v1beta1/providers:
@@ -3184,11 +1943,6 @@ paths:
                             type: string
                           value:
                             type: string
-                        description: >-
-                          Attribute defines an attribute wrapper where the key
-                          and value are
-
-                          strings instead of raw bytes.
                   title: Provider stores owner and host details
               pagination:
                 type: object
@@ -3221,7 +1975,7 @@ paths:
               QueryProvidersResponse is response type for the Query/Providers
               RPC method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -3239,176 +1993,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: pagination.key
           description: |-
@@ -3456,7 +2043,6 @@ paths:
           in: query
           required: false
           type: boolean
-          format: boolean
       tags:
         - Query
   '/akash/provider/v1beta1/providers/{owner}':
@@ -3486,17 +2072,12 @@ paths:
                           type: string
                         value:
                           type: string
-                      description: >-
-                        Attribute defines an attribute wrapper where the key and
-                        value are
-
-                        strings instead of raw bytes.
                 title: Provider stores owner and host details
             title: >-
               QueryProviderResponse is response type for the Query/Provider RPC
               method
         default:
-          description: An unexpected error response
+          description: An unexpected error response.
           schema:
             type: object
             properties:
@@ -3514,176 +2095,9 @@ paths:
                   properties:
                     type_url:
                       type: string
-                      description: >-
-                        A URL/resource name that uniquely identifies the type of
-                        the serialized
-
-                        protocol buffer message. This string must contain at
-                        least
-
-                        one "/" character. The last segment of the URL's path
-                        must represent
-
-                        the fully qualified name of the type (as in
-
-                        `path/google.protobuf.Duration`). The name should be in
-                        a canonical form
-
-                        (e.g., leading "." is not accepted).
-
-
-                        In practice, teams usually precompile into the binary
-                        all types that they
-
-                        expect it to use in the context of Any. However, for
-                        URLs which use the
-
-                        scheme `http`, `https`, or no scheme, one can optionally
-                        set up a type
-
-                        server that maps type URLs to message definitions as
-                        follows:
-
-
-                        * If no scheme is provided, `https` is assumed.
-
-                        * An HTTP GET on the URL must yield a
-                        [google.protobuf.Type][]
-                          value in binary format, or produce an error.
-                        * Applications are allowed to cache lookup results based
-                        on the
-                          URL, or have them precompiled into a binary to avoid any
-                          lookup. Therefore, binary compatibility needs to be preserved
-                          on changes to types. (Use versioned type names to manage
-                          breaking changes.)
-
-                        Note: this functionality is not currently available in
-                        the official
-
-                        protobuf release, and it is not used for type URLs
-                        beginning with
-
-                        type.googleapis.com.
-
-
-                        Schemes other than `http`, `https` (or the empty scheme)
-                        might be
-
-                        used with implementation specific semantics.
                     value:
                       type: string
                       format: byte
-                      description: >-
-                        Must be a valid serialized protocol buffer of the above
-                        specified type.
-                  description: >-
-                    `Any` contains an arbitrary serialized protocol buffer
-                    message along with a
-
-                    URL that describes the type of the serialized message.
-
-
-                    Protobuf library provides support to pack/unpack Any values
-                    in the form
-
-                    of utility functions or additional generated methods of the
-                    Any type.
-
-
-                    Example 1: Pack and unpack a message in C++.
-
-                        Foo foo = ...;
-                        Any any;
-                        any.PackFrom(foo);
-                        ...
-                        if (any.UnpackTo(&foo)) {
-                          ...
-                        }
-
-                    Example 2: Pack and unpack a message in Java.
-
-                        Foo foo = ...;
-                        Any any = Any.pack(foo);
-                        ...
-                        if (any.is(Foo.class)) {
-                          foo = any.unpack(Foo.class);
-                        }
-
-                     Example 3: Pack and unpack a message in Python.
-
-                        foo = Foo(...)
-                        any = Any()
-                        any.Pack(foo)
-                        ...
-                        if any.Is(Foo.DESCRIPTOR):
-                          any.Unpack(foo)
-                          ...
-
-                     Example 4: Pack and unpack a message in Go
-
-                         foo := &pb.Foo{...}
-                         any, err := ptypes.MarshalAny(foo)
-                         ...
-                         foo := &pb.Foo{}
-                         if err := ptypes.UnmarshalAny(any, foo); err != nil {
-                           ...
-                         }
-
-                    The pack methods provided by protobuf library will by
-                    default use
-
-                    'type.googleapis.com/full.type.name' as the type URL and the
-                    unpack
-
-                    methods only use the fully qualified type name after the
-                    last '/'
-
-                    in the type URL, for example "foo.bar.com/x/y.z" will yield
-                    type
-
-                    name "y.z".
-
-
-
-                    JSON
-
-                    ====
-
-                    The JSON representation of an `Any` value uses the regular
-
-                    representation of the deserialized, embedded message, with
-                    an
-
-                    additional field `@type` which contains the type URL.
-                    Example:
-
-                        package google.profile;
-                        message Person {
-                          string first_name = 1;
-                          string last_name = 2;
-                        }
-
-                        {
-                          "@type": "type.googleapis.com/google.profile.Person",
-                          "firstName": <string>,
-                          "lastName": <string>
-                        }
-
-                    If the embedded message type is well-known and has a custom
-                    JSON
-
-                    representation, that representation will be embedded adding
-                    a field
-
-                    `value` which holds the custom JSON in addition to the
-                    `@type`
-
-                    field. Example (for message [google.protobuf.Duration][]):
-
-                        {
-                          "@type": "type.googleapis.com/google.protobuf.Duration",
-                          "value": "1.212s"
-                        }
       parameters:
         - name: owner
           in: path
@@ -23681,19 +22095,142 @@ paths:
       tags:
         - Query
 definitions:
-  akash.base.v1beta1.Unit:
+  akash.base.v1beta1.Attribute:
     type: object
     properties:
-      cpu:
-        type: integer
-        format: int64
+      key:
+        type: string
+      value:
+        type: string
+  akash.base.v1beta1.CPU:
+    type: object
+    properties:
+      units:
+        type: object
+        properties:
+          val:
+            type: string
+            format: byte
+        title: 'Unit stores cpu, memory and storage metrics'
+      attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            key:
+              type: string
+            value:
+              type: string
+  akash.base.v1beta1.Memory:
+    type: object
+    properties:
+      quantity:
+        type: object
+        properties:
+          val:
+            type: string
+            format: byte
+        title: 'Unit stores cpu, memory and storage metrics'
+      attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            key:
+              type: string
+            value:
+              type: string
+  akash.base.v1beta1.ResourceUnits:
+    type: object
+    properties:
+      CPU:
+        type: object
+        properties:
+          units:
+            type: object
+            properties:
+              val:
+                type: string
+                format: byte
+            title: 'Unit stores cpu, memory and storage metrics'
+          attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
       memory:
-        type: string
-        format: uint64
+        type: object
+        properties:
+          quantity:
+            type: object
+            properties:
+              val:
+                type: string
+                format: byte
+            title: 'Unit stores cpu, memory and storage metrics'
+          attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
       storage:
+        type: object
+        properties:
+          quantity:
+            type: object
+            properties:
+              val:
+                type: string
+                format: byte
+            title: 'Unit stores cpu, memory and storage metrics'
+          attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+    title: >-
+      ResourceUnits describes all available resources types for deployment/node
+      etc
+
+      if field is nil resource is not present in the given data-structure
+  akash.base.v1beta1.ResourceValue:
+    type: object
+    properties:
+      val:
         type: string
-        format: uint64
+        format: byte
     title: 'Unit stores cpu, memory and storage metrics'
+  akash.base.v1beta1.Storage:
+    type: object
+    properties:
+      quantity:
+        type: object
+        properties:
+          val:
+            type: string
+            format: byte
+        title: 'Unit stores cpu, memory and storage metrics'
+      attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            key:
+              type: string
+            value:
+              type: string
   akash.deployment.v1beta1.Deployment:
     type: object
     properties:
@@ -23844,29 +22381,77 @@ definitions:
                         type: string
                       value:
                         type: string
-                    description: >-
-                      Attribute defines an attribute wrapper where the key and
-                      value are
-
-                      strings instead of raw bytes.
                 resources:
                   type: array
                   items:
                     type: object
                     properties:
-                      unit:
+                      resources:
                         type: object
                         properties:
-                          cpu:
-                            type: integer
-                            format: int64
+                          CPU:
+                            type: object
+                            properties:
+                              units:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
                           memory:
-                            type: string
-                            format: uint64
+                            type: object
+                            properties:
+                              quantity:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
                           storage:
-                            type: string
-                            format: uint64
-                        title: 'Unit stores cpu, memory and storage metrics'
+                            type: object
+                            properties:
+                              quantity:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
+                        title: >-
+                          ResourceUnits describes all available resources types
+                          for deployment/node etc
+
+                          if field is nil resource is not present in the given
+                          data-structure
                       count:
                         type: integer
                         format: int64
@@ -23949,29 +22534,77 @@ definitions:
                   type: string
                 value:
                   type: string
-              description: >-
-                Attribute defines an attribute wrapper where the key and value
-                are
-
-                strings instead of raw bytes.
           resources:
             type: array
             items:
               type: object
               properties:
-                unit:
+                resources:
                   type: object
                   properties:
-                    cpu:
-                      type: integer
-                      format: int64
+                    CPU:
+                      type: object
+                      properties:
+                        units:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
                     memory:
-                      type: string
-                      format: uint64
+                      type: object
+                      properties:
+                        quantity:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
                     storage:
-                      type: string
-                      format: uint64
-                  title: 'Unit stores cpu, memory and storage metrics'
+                      type: object
+                      properties:
+                        quantity:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                  title: >-
+                    ResourceUnits describes all available resources types for
+                    deployment/node etc
+
+                    if field is nil resource is not present in the given
+                    data-structure
                 count:
                   type: integer
                   format: int64
@@ -24041,27 +22674,77 @@ definitions:
               type: string
             value:
               type: string
-          description: |-
-            Attribute defines an attribute wrapper where the key and value are
-            strings instead of raw bytes.
       resources:
         type: array
         items:
           type: object
           properties:
-            unit:
+            resources:
               type: object
               properties:
-                cpu:
-                  type: integer
-                  format: int64
+                CPU:
+                  type: object
+                  properties:
+                    units:
+                      type: object
+                      properties:
+                        val:
+                          type: string
+                          format: byte
+                      title: 'Unit stores cpu, memory and storage metrics'
+                    attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                          value:
+                            type: string
                 memory:
-                  type: string
-                  format: uint64
+                  type: object
+                  properties:
+                    quantity:
+                      type: object
+                      properties:
+                        val:
+                          type: string
+                          format: byte
+                      title: 'Unit stores cpu, memory and storage metrics'
+                    attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                          value:
+                            type: string
                 storage:
-                  type: string
-                  format: uint64
-              title: 'Unit stores cpu, memory and storage metrics'
+                  type: object
+                  properties:
+                    quantity:
+                      type: object
+                      properties:
+                        val:
+                          type: string
+                          format: byte
+                      title: 'Unit stores cpu, memory and storage metrics'
+                    attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                          value:
+                            type: string
+              title: >-
+                ResourceUnits describes all available resources types for
+                deployment/node etc
+
+                if field is nil resource is not present in the given
+                data-structure
             count:
               type: integer
               format: int64
@@ -24174,29 +22857,83 @@ definitions:
                             type: string
                           value:
                             type: string
-                        description: >-
-                          Attribute defines an attribute wrapper where the key
-                          and value are
-
-                          strings instead of raw bytes.
                     resources:
                       type: array
                       items:
                         type: object
                         properties:
-                          unit:
+                          resources:
                             type: object
                             properties:
-                              cpu:
-                                type: integer
-                                format: int64
+                              CPU:
+                                type: object
+                                properties:
+                                  units:
+                                    type: object
+                                    properties:
+                                      val:
+                                        type: string
+                                        format: byte
+                                    title: >-
+                                      Unit stores cpu, memory and storage
+                                      metrics
+                                  attributes:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        key:
+                                          type: string
+                                        value:
+                                          type: string
                               memory:
-                                type: string
-                                format: uint64
+                                type: object
+                                properties:
+                                  quantity:
+                                    type: object
+                                    properties:
+                                      val:
+                                        type: string
+                                        format: byte
+                                    title: >-
+                                      Unit stores cpu, memory and storage
+                                      metrics
+                                  attributes:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        key:
+                                          type: string
+                                        value:
+                                          type: string
                               storage:
-                                type: string
-                                format: uint64
-                            title: 'Unit stores cpu, memory and storage metrics'
+                                type: object
+                                properties:
+                                  quantity:
+                                    type: object
+                                    properties:
+                                      val:
+                                        type: string
+                                        format: byte
+                                    title: >-
+                                      Unit stores cpu, memory and storage
+                                      metrics
+                                  attributes:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        key:
+                                          type: string
+                                        value:
+                                          type: string
+                            title: >-
+                              ResourceUnits describes all available resources
+                              types for deployment/node etc
+
+                              if field is nil resource is not present in the
+                              given data-structure
                           count:
                             type: integer
                             format: int64
@@ -24324,29 +23061,83 @@ definitions:
                               type: string
                             value:
                               type: string
-                          description: >-
-                            Attribute defines an attribute wrapper where the key
-                            and value are
-
-                            strings instead of raw bytes.
                       resources:
                         type: array
                         items:
                           type: object
                           properties:
-                            unit:
+                            resources:
                               type: object
                               properties:
-                                cpu:
-                                  type: integer
-                                  format: int64
+                                CPU:
+                                  type: object
+                                  properties:
+                                    units:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 memory:
-                                  type: string
-                                  format: uint64
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
                                 storage:
-                                  type: string
-                                  format: uint64
-                              title: 'Unit stores cpu, memory and storage metrics'
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: object
+                                      properties:
+                                        val:
+                                          type: string
+                                          format: byte
+                                      title: >-
+                                        Unit stores cpu, memory and storage
+                                        metrics
+                                    attributes:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          key:
+                                            type: string
+                                          value:
+                                            type: string
+                              title: >-
+                                ResourceUnits describes all available resources
+                                types for deployment/node etc
+
+                                if field is nil resource is not present in the
+                                given data-structure
                             count:
                               type: integer
                               format: int64
@@ -24462,29 +23253,77 @@ definitions:
                       type: string
                     value:
                       type: string
-                  description: >-
-                    Attribute defines an attribute wrapper where the key and
-                    value are
-
-                    strings instead of raw bytes.
               resources:
                 type: array
                 items:
                   type: object
                   properties:
-                    unit:
+                    resources:
                       type: object
                       properties:
-                        cpu:
-                          type: integer
-                          format: int64
+                        CPU:
+                          type: object
+                          properties:
+                            units:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
                         memory:
-                          type: string
-                          format: uint64
+                          type: object
+                          properties:
+                            quantity:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
                         storage:
-                          type: string
-                          format: uint64
-                      title: 'Unit stores cpu, memory and storage metrics'
+                          type: object
+                          properties:
+                            quantity:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
+                      title: >-
+                        ResourceUnits describes all available resources types
+                        for deployment/node etc
+
+                        if field is nil resource is not present in the given
+                        data-structure
                     count:
                       type: integer
                       format: int64
@@ -24513,19 +23352,71 @@ definitions:
   akash.deployment.v1beta1.Resource:
     type: object
     properties:
-      unit:
+      resources:
         type: object
         properties:
-          cpu:
-            type: integer
-            format: int64
+          CPU:
+            type: object
+            properties:
+              units:
+                type: object
+                properties:
+                  val:
+                    type: string
+                    format: byte
+                title: 'Unit stores cpu, memory and storage metrics'
+              attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
           memory:
-            type: string
-            format: uint64
+            type: object
+            properties:
+              quantity:
+                type: object
+                properties:
+                  val:
+                    type: string
+                    format: byte
+                title: 'Unit stores cpu, memory and storage metrics'
+              attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
           storage:
-            type: string
-            format: uint64
-        title: 'Unit stores cpu, memory and storage metrics'
+            type: object
+            properties:
+              quantity:
+                type: object
+                properties:
+                  val:
+                    type: string
+                    format: byte
+                title: 'Unit stores cpu, memory and storage metrics'
+              attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
+        title: >-
+          ResourceUnits describes all available resources types for
+          deployment/node etc
+
+          if field is nil resource is not present in the given data-structure
       count:
         type: integer
         format: int64
@@ -24542,16 +23433,6 @@ definitions:
           NOTE: The amount field is an Int which implements the custom method
           signatures required by gogoproto.
     title: 'Resource stores unit, total count and price of resource'
-  cosmos.base.abci.v1beta1.Attribute:
-    type: object
-    properties:
-      key:
-        type: string
-      value:
-        type: string
-    description: |-
-      Attribute defines an attribute wrapper where the key and value are
-      strings instead of raw bytes.
   cosmos.base.query.v1beta1.PageRequest:
     type: object
     properties:
@@ -24579,7 +23460,6 @@ definitions:
           If left empty it will default to a value to be set by each app.
       count_total:
         type: boolean
-        format: boolean
         description: >-
           count_total is set to true  to indicate that the result set should
           include
@@ -24590,6 +23470,7 @@ definitions:
           key
 
           is set.
+        format: boolean
     description: |-
       message SomeRequest {
                Foo some_parameter = 1;
@@ -25229,29 +24110,77 @@ definitions:
                   type: string
                 value:
                   type: string
-              description: >-
-                Attribute defines an attribute wrapper where the key and value
-                are
-
-                strings instead of raw bytes.
           resources:
             type: array
             items:
               type: object
               properties:
-                unit:
+                resources:
                   type: object
                   properties:
-                    cpu:
-                      type: integer
-                      format: int64
+                    CPU:
+                      type: object
+                      properties:
+                        units:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
                     memory:
-                      type: string
-                      format: uint64
+                      type: object
+                      properties:
+                        quantity:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
                     storage:
-                      type: string
-                      format: uint64
-                  title: 'Unit stores cpu, memory and storage metrics'
+                      type: object
+                      properties:
+                        quantity:
+                          type: object
+                          properties:
+                            val:
+                              type: string
+                              format: byte
+                          title: 'Unit stores cpu, memory and storage metrics'
+                        attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                  title: >-
+                    ResourceUnits describes all available resources types for
+                    deployment/node etc
+
+                    if field is nil resource is not present in the given
+                    data-structure
                 count:
                   type: integer
                   format: int64
@@ -25671,29 +24600,77 @@ definitions:
                       type: string
                     value:
                       type: string
-                  description: >-
-                    Attribute defines an attribute wrapper where the key and
-                    value are
-
-                    strings instead of raw bytes.
               resources:
                 type: array
                 items:
                   type: object
                   properties:
-                    unit:
+                    resources:
                       type: object
                       properties:
-                        cpu:
-                          type: integer
-                          format: int64
+                        CPU:
+                          type: object
+                          properties:
+                            units:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
                         memory:
-                          type: string
-                          format: uint64
+                          type: object
+                          properties:
+                            quantity:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
                         storage:
-                          type: string
-                          format: uint64
-                      title: 'Unit stores cpu, memory and storage metrics'
+                          type: object
+                          properties:
+                            quantity:
+                              type: object
+                              properties:
+                                val:
+                                  type: string
+                                  format: byte
+                              title: 'Unit stores cpu, memory and storage metrics'
+                            attributes:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                  value:
+                                    type: string
+                      title: >-
+                        ResourceUnits describes all available resources types
+                        for deployment/node etc
+
+                        if field is nil resource is not present in the given
+                        data-structure
                     count:
                       type: integer
                       format: int64
@@ -25778,29 +24755,77 @@ definitions:
                         type: string
                       value:
                         type: string
-                    description: >-
-                      Attribute defines an attribute wrapper where the key and
-                      value are
-
-                      strings instead of raw bytes.
                 resources:
                   type: array
                   items:
                     type: object
                     properties:
-                      unit:
+                      resources:
                         type: object
                         properties:
-                          cpu:
-                            type: integer
-                            format: int64
+                          CPU:
+                            type: object
+                            properties:
+                              units:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
                           memory:
-                            type: string
-                            format: uint64
+                            type: object
+                            properties:
+                              quantity:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
                           storage:
-                            type: string
-                            format: uint64
-                        title: 'Unit stores cpu, memory and storage metrics'
+                            type: object
+                            properties:
+                              quantity:
+                                type: object
+                                properties:
+                                  val:
+                                    type: string
+                                    format: byte
+                                title: 'Unit stores cpu, memory and storage metrics'
+                              attributes:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
+                        title: >-
+                          ResourceUnits describes all available resources types
+                          for deployment/node etc
+
+                          if field is nil resource is not present in the given
+                          data-structure
                       count:
                         type: integer
                         format: int64
@@ -25872,9 +24897,6 @@ definitions:
               type: string
             value:
               type: string
-          description: |-
-            Attribute defines an attribute wrapper where the key and value are
-            strings instead of raw bytes.
     title: Provider stores owner and host details
   akash.provider.v1beta1.QueryProviderResponse:
     type: object
@@ -25896,11 +24918,6 @@ definitions:
                   type: string
                 value:
                   type: string
-              description: >-
-                Attribute defines an attribute wrapper where the key and value
-                are
-
-                strings instead of raw bytes.
         title: Provider stores owner and host details
     title: QueryProviderResponse is response type for the Query/Provider RPC method
   akash.provider.v1beta1.QueryProvidersResponse:
@@ -25925,11 +24942,6 @@ definitions:
                     type: string
                   value:
                     type: string
-                description: >-
-                  Attribute defines an attribute wrapper where the key and value
-                  are
-
-                  strings instead of raw bytes.
           title: Provider stores owner and host details
       pagination:
         type: object
