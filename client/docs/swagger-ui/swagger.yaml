@@ -100,6 +100,7 @@ paths:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
                             resources:
                               type: array
                               items:
@@ -108,7 +109,7 @@ paths:
                                   resources:
                                     type: object
                                     properties:
-                                      CPU:
+                                      cpu:
                                         type: object
                                         properties:
                                           units:
@@ -129,6 +130,10 @@ paths:
                                                   type: string
                                                 value:
                                                   type: string
+                                              title: Attribute represents key value pair
+                                        title: >-
+                                          CPU stores resource units and cpu config
+                                          attributes
                                       memory:
                                         type: object
                                         properties:
@@ -150,6 +155,10 @@ paths:
                                                   type: string
                                                 value:
                                                   type: string
+                                              title: Attribute represents key value pair
+                                        title: >-
+                                          Memory stores resource quantity and
+                                          memory attributes
                                       storage:
                                         type: object
                                         properties:
@@ -171,6 +180,10 @@ paths:
                                                   type: string
                                                 value:
                                                   type: string
+                                              title: Attribute represents key value pair
+                                        title: >-
+                                          Storage stores resource quantity and
+                                          storage attributes
                                     title: >-
                                       ResourceUnits describes all available
                                       resources types for deployment/node etc
@@ -348,6 +361,7 @@ paths:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
                               resources:
                                 type: array
                                 items:
@@ -356,7 +370,7 @@ paths:
                                     resources:
                                       type: object
                                       properties:
-                                        CPU:
+                                        cpu:
                                           type: object
                                           properties:
                                             units:
@@ -377,6 +391,10 @@ paths:
                                                     type: string
                                                   value:
                                                     type: string
+                                                title: Attribute represents key value pair
+                                          title: >-
+                                            CPU stores resource units and cpu config
+                                            attributes
                                         memory:
                                           type: object
                                           properties:
@@ -398,6 +416,10 @@ paths:
                                                     type: string
                                                   value:
                                                     type: string
+                                                title: Attribute represents key value pair
+                                          title: >-
+                                            Memory stores resource quantity and
+                                            memory attributes
                                         storage:
                                           type: object
                                           properties:
@@ -419,6 +441,10 @@ paths:
                                                     type: string
                                                   value:
                                                     type: string
+                                                title: Attribute represents key value pair
+                                          title: >-
+                                            Storage stores resource quantity and
+                                            storage attributes
                                       title: >-
                                         ResourceUnits describes all available
                                         resources types for deployment/node etc
@@ -636,6 +662,7 @@ paths:
                               type: string
                             value:
                               type: string
+                          title: Attribute represents key value pair
                       resources:
                         type: array
                         items:
@@ -644,7 +671,7 @@ paths:
                             resources:
                               type: object
                               properties:
-                                CPU:
+                                cpu:
                                   type: object
                                   properties:
                                     units:
@@ -665,6 +692,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    CPU stores resource units and cpu config
+                                    attributes
                                 memory:
                                   type: object
                                   properties:
@@ -686,6 +717,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Memory stores resource quantity and memory
+                                    attributes
                                 storage:
                                   type: object
                                   properties:
@@ -707,6 +742,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Storage stores resource quantity and storage
+                                    attributes
                               title: >-
                                 ResourceUnits describes all available resources
                                 types for deployment/node etc
@@ -1466,6 +1505,7 @@ paths:
                               type: string
                             value:
                               type: string
+                          title: Attribute represents key value pair
                       resources:
                         type: array
                         items:
@@ -1474,7 +1514,7 @@ paths:
                             resources:
                               type: object
                               properties:
-                                CPU:
+                                cpu:
                                   type: object
                                   properties:
                                     units:
@@ -1495,6 +1535,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    CPU stores resource units and cpu config
+                                    attributes
                                 memory:
                                   type: object
                                   properties:
@@ -1516,6 +1560,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Memory stores resource quantity and memory
+                                    attributes
                                 storage:
                                   type: object
                                   properties:
@@ -1537,6 +1585,10 @@ paths:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Storage stores resource quantity and storage
+                                    attributes
                               title: >-
                                 ResourceUnits describes all available resources
                                 types for deployment/node etc
@@ -1682,6 +1734,7 @@ paths:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
                         resources:
                           type: array
                           items:
@@ -1690,7 +1743,7 @@ paths:
                               resources:
                                 type: object
                                 properties:
-                                  CPU:
+                                  cpu:
                                     type: object
                                     properties:
                                       units:
@@ -1711,6 +1764,10 @@ paths:
                                               type: string
                                             value:
                                               type: string
+                                          title: Attribute represents key value pair
+                                    title: >-
+                                      CPU stores resource units and cpu config
+                                      attributes
                                   memory:
                                     type: object
                                     properties:
@@ -1732,6 +1789,10 @@ paths:
                                               type: string
                                             value:
                                               type: string
+                                          title: Attribute represents key value pair
+                                    title: >-
+                                      Memory stores resource quantity and memory
+                                      attributes
                                   storage:
                                     type: object
                                     properties:
@@ -1753,6 +1814,10 @@ paths:
                                               type: string
                                             value:
                                               type: string
+                                          title: Attribute represents key value pair
+                                    title: >-
+                                      Storage stores resource quantity and
+                                      storage attributes
                                 title: >-
                                   ResourceUnits describes all available
                                   resources types for deployment/node etc
@@ -1943,6 +2008,7 @@ paths:
                             type: string
                           value:
                             type: string
+                        title: Attribute represents key value pair
                   title: Provider stores owner and host details
               pagination:
                 type: object
@@ -2072,6 +2138,7 @@ paths:
                           type: string
                         value:
                           type: string
+                      title: Attribute represents key value pair
                 title: Provider stores owner and host details
             title: >-
               QueryProviderResponse is response type for the Query/Provider RPC
@@ -22102,6 +22169,7 @@ definitions:
         type: string
       value:
         type: string
+    title: Attribute represents key value pair
   akash.base.v1beta1.CPU:
     type: object
     properties:
@@ -22121,6 +22189,8 @@ definitions:
               type: string
             value:
               type: string
+          title: Attribute represents key value pair
+    title: CPU stores resource units and cpu config attributes
   akash.base.v1beta1.Memory:
     type: object
     properties:
@@ -22140,10 +22210,12 @@ definitions:
               type: string
             value:
               type: string
+          title: Attribute represents key value pair
+    title: Memory stores resource quantity and memory attributes
   akash.base.v1beta1.ResourceUnits:
     type: object
     properties:
-      CPU:
+      cpu:
         type: object
         properties:
           units:
@@ -22162,6 +22234,8 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
+        title: CPU stores resource units and cpu config attributes
       memory:
         type: object
         properties:
@@ -22181,6 +22255,8 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
+        title: Memory stores resource quantity and memory attributes
       storage:
         type: object
         properties:
@@ -22200,6 +22276,8 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
+        title: Storage stores resource quantity and storage attributes
     title: >-
       ResourceUnits describes all available resources types for deployment/node
       etc
@@ -22231,6 +22309,8 @@ definitions:
               type: string
             value:
               type: string
+          title: Attribute represents key value pair
+    title: Storage stores resource quantity and storage attributes
   akash.deployment.v1beta1.Deployment:
     type: object
     properties:
@@ -22381,6 +22461,7 @@ definitions:
                         type: string
                       value:
                         type: string
+                    title: Attribute represents key value pair
                 resources:
                   type: array
                   items:
@@ -22389,7 +22470,7 @@ definitions:
                       resources:
                         type: object
                         properties:
-                          CPU:
+                          cpu:
                             type: object
                             properties:
                               units:
@@ -22408,6 +22489,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              CPU stores resource units and cpu config
+                              attributes
                           memory:
                             type: object
                             properties:
@@ -22427,6 +22512,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              Memory stores resource quantity and memory
+                              attributes
                           storage:
                             type: object
                             properties:
@@ -22446,6 +22535,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              Storage stores resource quantity and storage
+                              attributes
                         title: >-
                           ResourceUnits describes all available resources types
                           for deployment/node etc
@@ -22534,6 +22627,7 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
           resources:
             type: array
             items:
@@ -22542,7 +22636,7 @@ definitions:
                 resources:
                   type: object
                   properties:
-                    CPU:
+                    cpu:
                       type: object
                       properties:
                         units:
@@ -22561,6 +22655,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: CPU stores resource units and cpu config attributes
                     memory:
                       type: object
                       properties:
@@ -22580,6 +22676,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: Memory stores resource quantity and memory attributes
                     storage:
                       type: object
                       properties:
@@ -22599,6 +22697,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: Storage stores resource quantity and storage attributes
                   title: >-
                     ResourceUnits describes all available resources types for
                     deployment/node etc
@@ -22674,6 +22774,7 @@ definitions:
               type: string
             value:
               type: string
+          title: Attribute represents key value pair
       resources:
         type: array
         items:
@@ -22682,7 +22783,7 @@ definitions:
             resources:
               type: object
               properties:
-                CPU:
+                cpu:
                   type: object
                   properties:
                     units:
@@ -22701,6 +22802,8 @@ definitions:
                             type: string
                           value:
                             type: string
+                        title: Attribute represents key value pair
+                  title: CPU stores resource units and cpu config attributes
                 memory:
                   type: object
                   properties:
@@ -22720,6 +22823,8 @@ definitions:
                             type: string
                           value:
                             type: string
+                        title: Attribute represents key value pair
+                  title: Memory stores resource quantity and memory attributes
                 storage:
                   type: object
                   properties:
@@ -22739,6 +22844,8 @@ definitions:
                             type: string
                           value:
                             type: string
+                        title: Attribute represents key value pair
+                  title: Storage stores resource quantity and storage attributes
               title: >-
                 ResourceUnits describes all available resources types for
                 deployment/node etc
@@ -22857,6 +22964,7 @@ definitions:
                             type: string
                           value:
                             type: string
+                        title: Attribute represents key value pair
                     resources:
                       type: array
                       items:
@@ -22865,7 +22973,7 @@ definitions:
                           resources:
                             type: object
                             properties:
-                              CPU:
+                              cpu:
                                 type: object
                                 properties:
                                   units:
@@ -22886,6 +22994,10 @@ definitions:
                                           type: string
                                         value:
                                           type: string
+                                      title: Attribute represents key value pair
+                                title: >-
+                                  CPU stores resource units and cpu config
+                                  attributes
                               memory:
                                 type: object
                                 properties:
@@ -22907,6 +23019,10 @@ definitions:
                                           type: string
                                         value:
                                           type: string
+                                      title: Attribute represents key value pair
+                                title: >-
+                                  Memory stores resource quantity and memory
+                                  attributes
                               storage:
                                 type: object
                                 properties:
@@ -22928,6 +23044,10 @@ definitions:
                                           type: string
                                         value:
                                           type: string
+                                      title: Attribute represents key value pair
+                                title: >-
+                                  Storage stores resource quantity and storage
+                                  attributes
                             title: >-
                               ResourceUnits describes all available resources
                               types for deployment/node etc
@@ -23061,6 +23181,7 @@ definitions:
                               type: string
                             value:
                               type: string
+                          title: Attribute represents key value pair
                       resources:
                         type: array
                         items:
@@ -23069,7 +23190,7 @@ definitions:
                             resources:
                               type: object
                               properties:
-                                CPU:
+                                cpu:
                                   type: object
                                   properties:
                                     units:
@@ -23090,6 +23211,10 @@ definitions:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    CPU stores resource units and cpu config
+                                    attributes
                                 memory:
                                   type: object
                                   properties:
@@ -23111,6 +23236,10 @@ definitions:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Memory stores resource quantity and memory
+                                    attributes
                                 storage:
                                   type: object
                                   properties:
@@ -23132,6 +23261,10 @@ definitions:
                                             type: string
                                           value:
                                             type: string
+                                        title: Attribute represents key value pair
+                                  title: >-
+                                    Storage stores resource quantity and storage
+                                    attributes
                               title: >-
                                 ResourceUnits describes all available resources
                                 types for deployment/node etc
@@ -23253,6 +23386,7 @@ definitions:
                       type: string
                     value:
                       type: string
+                  title: Attribute represents key value pair
               resources:
                 type: array
                 items:
@@ -23261,7 +23395,7 @@ definitions:
                     resources:
                       type: object
                       properties:
-                        CPU:
+                        cpu:
                           type: object
                           properties:
                             units:
@@ -23280,6 +23414,8 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: CPU stores resource units and cpu config attributes
                         memory:
                           type: object
                           properties:
@@ -23299,6 +23435,10 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: >-
+                            Memory stores resource quantity and memory
+                            attributes
                         storage:
                           type: object
                           properties:
@@ -23318,6 +23458,10 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: >-
+                            Storage stores resource quantity and storage
+                            attributes
                       title: >-
                         ResourceUnits describes all available resources types
                         for deployment/node etc
@@ -23355,7 +23499,7 @@ definitions:
       resources:
         type: object
         properties:
-          CPU:
+          cpu:
             type: object
             properties:
               units:
@@ -23374,6 +23518,8 @@ definitions:
                       type: string
                     value:
                       type: string
+                  title: Attribute represents key value pair
+            title: CPU stores resource units and cpu config attributes
           memory:
             type: object
             properties:
@@ -23393,6 +23539,8 @@ definitions:
                       type: string
                     value:
                       type: string
+                  title: Attribute represents key value pair
+            title: Memory stores resource quantity and memory attributes
           storage:
             type: object
             properties:
@@ -23412,6 +23560,8 @@ definitions:
                       type: string
                     value:
                       type: string
+                  title: Attribute represents key value pair
+            title: Storage stores resource quantity and storage attributes
         title: >-
           ResourceUnits describes all available resources types for
           deployment/node etc
@@ -24110,6 +24260,7 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
           resources:
             type: array
             items:
@@ -24118,7 +24269,7 @@ definitions:
                 resources:
                   type: object
                   properties:
-                    CPU:
+                    cpu:
                       type: object
                       properties:
                         units:
@@ -24137,6 +24288,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: CPU stores resource units and cpu config attributes
                     memory:
                       type: object
                       properties:
@@ -24156,6 +24309,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: Memory stores resource quantity and memory attributes
                     storage:
                       type: object
                       properties:
@@ -24175,6 +24330,8 @@ definitions:
                                 type: string
                               value:
                                 type: string
+                            title: Attribute represents key value pair
+                      title: Storage stores resource quantity and storage attributes
                   title: >-
                     ResourceUnits describes all available resources types for
                     deployment/node etc
@@ -24600,6 +24757,7 @@ definitions:
                       type: string
                     value:
                       type: string
+                  title: Attribute represents key value pair
               resources:
                 type: array
                 items:
@@ -24608,7 +24766,7 @@ definitions:
                     resources:
                       type: object
                       properties:
-                        CPU:
+                        cpu:
                           type: object
                           properties:
                             units:
@@ -24627,6 +24785,8 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: CPU stores resource units and cpu config attributes
                         memory:
                           type: object
                           properties:
@@ -24646,6 +24806,10 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: >-
+                            Memory stores resource quantity and memory
+                            attributes
                         storage:
                           type: object
                           properties:
@@ -24665,6 +24829,10 @@ definitions:
                                     type: string
                                   value:
                                     type: string
+                                title: Attribute represents key value pair
+                          title: >-
+                            Storage stores resource quantity and storage
+                            attributes
                       title: >-
                         ResourceUnits describes all available resources types
                         for deployment/node etc
@@ -24755,6 +24923,7 @@ definitions:
                         type: string
                       value:
                         type: string
+                    title: Attribute represents key value pair
                 resources:
                   type: array
                   items:
@@ -24763,7 +24932,7 @@ definitions:
                       resources:
                         type: object
                         properties:
-                          CPU:
+                          cpu:
                             type: object
                             properties:
                               units:
@@ -24782,6 +24951,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              CPU stores resource units and cpu config
+                              attributes
                           memory:
                             type: object
                             properties:
@@ -24801,6 +24974,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              Memory stores resource quantity and memory
+                              attributes
                           storage:
                             type: object
                             properties:
@@ -24820,6 +24997,10 @@ definitions:
                                       type: string
                                     value:
                                       type: string
+                                  title: Attribute represents key value pair
+                            title: >-
+                              Storage stores resource quantity and storage
+                              attributes
                         title: >-
                           ResourceUnits describes all available resources types
                           for deployment/node etc
@@ -24897,6 +25078,7 @@ definitions:
               type: string
             value:
               type: string
+          title: Attribute represents key value pair
     title: Provider stores owner and host details
   akash.provider.v1beta1.QueryProviderResponse:
     type: object
@@ -24918,6 +25100,7 @@ definitions:
                   type: string
                 value:
                   type: string
+              title: Attribute represents key value pair
         title: Provider stores owner and host details
     title: QueryProviderResponse is response type for the Query/Provider RPC method
   akash.provider.v1beta1.QueryProvidersResponse:
@@ -24942,6 +25125,7 @@ definitions:
                     type: string
                   value:
                     type: string
+                title: Attribute represents key value pair
           title: Provider stores owner and host details
       pagination:
         type: object
