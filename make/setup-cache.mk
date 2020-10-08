@@ -69,6 +69,26 @@ else
 	@echo "swagger-combine already installed; skipping..."
 endif
 
+clang-format-install:
+ifeq (, $(shell which ${CLANG_FORMAT_BIN}))
+	@echo "Installing clang-format..."
+ifeq ($(UNAME_OS),Darwin)
+	brew install clang-format
+endif
+ifeq ($(UNAME_OS),Linux)
+	if [ -e /etc/debian_version ]; then \
+		sudo apt-get install -y ${CLANG_FORMAT_BIN} ; \
+	elif [ -e /etc/fedora-release ]; then \
+		sudo dnf install clang; \
+	else \
+		echo -e "\tRun (as root): subscription-manager repos --enable rhel-7-server-devtools-rpms ; \
+		yum install llvm-toolset-7" >&2; \
+	fi;
+endif
+else
+	@echo "${CLANG_FORMAT_BIN} already installed; skipping..."
+endif
+
 kubetypes-deps-install:
 	if [ -d "$(shell go env GOPATH)/src/k8s.io/code-generator" ]; then    \
 		cd "$(shell go env GOPATH)/src/k8s.io/code-generator" && git pull;  \
