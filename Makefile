@@ -54,11 +54,13 @@ GORELEASER_LD_FLAGS = '-s -w -X github.com/cosmos/cosmos-sdk/version.Name=akash 
 -X github.com/cosmos/cosmos-sdk/version.Version=$(shell git describe --tags --abbrev=0) \
 -X github.com/cosmos/cosmos-sdk/version.Commit=$(shell git log -1 --format='%H')'
 
+VERSION ?= $(shell git describe --tags | sed 's/^v//')
+COMMIT ?= $(shell git log -1 --format='%H')'
 BUILD_FLAGS = -mod=readonly -tags "$(BUILD_TAGS)" -ldflags '-X github.com/cosmos/cosmos-sdk/version.Name=akash \
 -X github.com/cosmos/cosmos-sdk/version.AppName=akash \
 -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(BUILD_TAGS)" \
--X github.com/cosmos/cosmos-sdk/version.Version=$(shell git describe --tags | sed 's/^v//') \
--X github.com/cosmos/cosmos-sdk/version.Commit=$(shell git log -1 --format='%H')'
+-X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
+-X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) $(LDFLAGS)'
 
 include make/proto.mk
 include make/setup-cache.mk
