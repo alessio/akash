@@ -20,7 +20,6 @@ CACHE_BIN             := $(CACHE)/bin
 CACHE_INCLUDE         := $(CACHE)/include
 CACHE_VERSIONS        := $(CACHE)/versions
 
-BUF_VERSION           ?= 0.20.5
 PROTOC_VERSION        ?= 3.11.2
 GOLANGCI_LINT_VERSION ?= v1.27.0
 GOLANG_VERSION        ?= 1.15.2
@@ -28,7 +27,6 @@ GOLANG_CROSS_VERSION  := v$(GOLANG_VERSION)
 
 # <TOOL>_VERSION_FILE points to the marker file for the installed version.
 # If <TOOL>_VERSION_FILE is changed, the binary will be re-downloaded.
-BUF_VERSION_FILE           = $(CACHE_VERSIONS)/buf/$(BUF_VERSION)
 PROTOC_VERSION_FILE        = $(CACHE_VERSIONS)/protoc/$(PROTOC_VERSION)
 GOLANGCI_LINT_VERSION_FILE = $(CACHE_VERSIONS)/golangci-lint/$(GOLANGCI_LINT_VERSION)
 
@@ -97,9 +95,3 @@ include make/test-simulation.mk
 include make/tools.mk
 include make/environment.mk
 include make/codegen.mk
-
-.PHONY: all
-all: build bins
-
-clean: cache-clean
-	rm -f $(BINS)
