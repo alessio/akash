@@ -1,3 +1,7 @@
+#!/usr/bin/make -f
+
+VERSION ?= $(shell git describe --tags | sed 's/^v//')
+COMMIT ?= $(shell git log -1 --format='%H')'
 BINS                  := akash
 APP_DIR               := ./app
 
@@ -31,8 +35,11 @@ GOLANGCI_LINT_VERSION_FILE = $(CACHE_VERSIONS)/golangci-lint/$(GOLANGCI_LINT_VER
 GOLANGCI_LINT          = $(CACHE_BIN)/golangci-lint
 LINT                   = $(GOLANGCI_LINT) run ./... --disable-all --deadline=5m --enable
 MODVENDOR              = $(CACHE_BIN)/modvendor
-BUF                   := $(CACHE_BIN)/buf
-PROTOC                := $(CACHE_BIN)/protoc
+PROTOC                := $(CACHE_BIN)/
+
+DOCKER_RUN   := docker run -v $(shell pwd):/workspace --workdir /workspace
+DOCKER_BUF   := $(DOCKER_RUN) bufbuild/buf
+DOCKER_CLANG := $(DOCKER_RUN) tendermintdev/docker-build-proto
 
 # BUILD_TAGS are for builds withing this makefile
 # GORELEASER_BUILD_TAGS are for goreleaser only
@@ -54,13 +61,31 @@ GORELEASER_LD_FLAGS = '-s -w -X github.com/cosmos/cosmos-sdk/version.Name=akash 
 -X github.com/cosmos/cosmos-sdk/version.Version=$(shell git describe --tags --abbrev=0) \
 -X github.com/cosmos/cosmos-sdk/version.Commit=$(shell git log -1 --format='%H')'
 
-VERSION ?= $(shell git describe --tags | sed 's/^v//')
-COMMIT ?= $(shell git log -1 --format='%H')'
-BUILD_FLAGS = -mod=readonly -tags "$(BUILD_TAGS)" -ldflags '-X github.com/cosmos/cosmos-sdk/version.Name=akash \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=akash \
 -X github.com/cosmos/cosmos-sdk/version.AppName=akash \
 -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(BUILD_TAGS)" \
 -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
--X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) $(LDFLAGS)'
+-X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT)
+
+# check for nostrip option
+ifeq (,$(findstring nostrip,$(BUILD_OPTIONS)))
+  ldflags += -s -w
+endif
+ldflags += $(LDFLAGS)
+ldflags := $(strip $(ldflags))
+
+BUILD_FLAGS := -mod=readonly -tags "$(BUILD_TAGS)" -ldflags '$(ldflags)'
+# check for nostrip option
+ifeq (,$(findstring nostrip,$(BUILD_OPTIONS)))
+  BUILD_FLAGS += -trimpath
+endif
+
+.PHONY: all
+all: build bins
+
+.PHONY: clean
+clean: cache-clean
+	rm -f $(BINS)
 
 include make/proto.mk
 include make/setup-cache.mk
